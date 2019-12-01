@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66" height="66" viewBox="-33 -33 66 66" 
+	xmlns="http://www.w3.org/2000/svg" 
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+	<use xlink:href="#puzzleup" transform="translate(-18,-18)"/>
+	<use xlink:href="#puzzleup" transform="translate(0,-18)"/>
+	<use xlink:href="#puzzleup" transform="translate(18,-18)"/>
+
+	<use xlink:href="#puzzleup" transform="translate(-18,0)"/>
+	<use xlink:href="#puzzleup" />
+	<use xlink:href="#puzzleup" transform="translate(18,0)"/>
+
+	<use xlink:href="#puzzleup" transform="translate(-18,18)"/>
+	<use xlink:href="#puzzleup" transform="translate(0,18)"/>
+	<use xlink:href="#puzzleup" transform="translate(18,18)"/>
+
+	<use xlink:href="#puzzleback" transform="translate(-18,0)"/>
+	<use xlink:href="#puzzleback" />
+	<use xlink:href="#puzzleback" transform="translate(18,0)"/>
+
+	<use xlink:href="#puzzlefront" transform="translate(-18,0)"/>
+	<use xlink:href="#puzzlefront" />
+	<use xlink:href="#puzzlefront" transform="translate(18,0)"/>
+
+	<use xlink:href="#puzzleleft" transform="translate(0,-18)"/>
+	<use xlink:href="#puzzleleft" />
+	<use xlink:href="#puzzleleft" transform="translate(0,18)"/>
+
+	<use xlink:href="#puzzleright" transform="translate(0,-18)"/>
+	<use xlink:href="#puzzleright" />
+	<use xlink:href="#puzzleright" transform="translate(0,18)"/>
+</svg>

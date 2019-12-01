@@ -1,0 +1,21 @@
+table {
+	border-collapse: collapse;
+}
+
+table,
+th,
+td {
+	border: 1px solid black;
+}
+
+td {
+	text-align: center;
+	width: 100px;
+	height: 120px;
+}
+
+#refpiece {
+	position: absolute;
+	opacity: 0;
+	z-index: -10;
+}

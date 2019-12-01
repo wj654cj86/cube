@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66" height="66" viewBox="-33 -33 66 66" 
+	xmlns="http://www.w3.org/2000/svg" 
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+	<use xlink:href="#puzzleup" fill="#ff0" transform="translate(-18,-18)"/>
+	<use xlink:href="#puzzleup" fill="#ff0" transform="translate(0,-18)"/>
+	<use xlink:href="#puzzleup" fill="#ff0" transform="translate(18,-18)"/>
+
+	<use xlink:href="#puzzleup" fill="#ff0" transform="translate(-18,0)"/>
+	<use xlink:href="#puzzleup" fill="#ff0" />
+	<use xlink:href="#puzzleup" fill="#ff0" transform="translate(18,0)"/>
+
+	<use xlink:href="#puzzleup" fill="#ff0" transform="translate(-18,18)"/>
+	<use xlink:href="#puzzleup" fill="#ff0" transform="translate(0,18)"/>
+	<use xlink:href="#puzzleup" fill="#ff0" transform="translate(18,18)"/>
+
+	<path d="M0,0h36m1,0l-2-1v2l2-1z" class="arrow" transform="translate(-18,18) rotate(90)"/>
+</svg>
