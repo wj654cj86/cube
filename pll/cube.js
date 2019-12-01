@@ -13,13 +13,48 @@ var plldata = {
 		[['a28a', 'a46a'], ['a24a', 'a68a'], ['a17a', 'a39a']],
 		[['86a', '64a', '48a'], ['84a', '46a', '68a'], ['19a', '97a', '71a'], ['37a', '79a', '93a']],
 		[['a28a', 'a39a'], ['a39a', 'a46a'], ['a37a', 'a68a'], ['a19a', 'a24a']],
-		[['a39a', 'a68a'], ['a17a', 'a48a'], ['a37a', 'a46a'], ['a19a', 'a46a']],
-		[['a17a', 'a68a'], ['a39a', 'a48a']],
+		[['a17a', 'a48a'], ['a39a', 'a68a'], ['a37a', 'a46a'], ['a19a', 'a46a']],
+		[['a24a', 'a39a'], ['a26a', 'a17a']],
 		[
-			['b24a', 'b48a', 'b82a', 'r19a', 'r97a', 'r71a'],
-			['b28a', 'b84a', 'b42a', 'r17a', 'r79a', 'r91a'],
-			['b26a', 'b68a', 'b82a', 'r37a', 'r79a', 'r93a'],
-			['b28a', 'b86a', 'b62a', 'r39a', 'r97a', 'r73a']
+			['b24a', 'b46a', 'b62a', 'r31a', 'r17a', 'r73a'],
+			['b42a', 'b64a', 'b26a', 'r13a', 'r71a', 'r37a'],
+			['b26a', 'b64a', 'b42a', 'r13a', 'r39a', 'r91a'],
+			['b62a', 'b46a', 'b24a', 'r31a', 'r93a', 'r19a']
+		]
+	],
+	formula: [
+		[
+			"M2 U M2 U2 M2 U M2",
+			"M2 U M2 U M' U2 M2 U2 M' U2",
+			"l U' R' D R U R' D' R U R' D R U' R' D'"
+		],
+		[
+			"M2 U M U2 M' U M2",
+			"M2 U' M U2 M' U' M2",
+			"r' U L' D2 L U' L' D2 L2",
+			"l U' R D2 R' U R D2 R2"
+		],
+		[
+			"R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R",
+			"R U R' U' R' F R2 U' R' U' R U R' F'",
+			"L' U R U' L U L' U R' U' L U2 R U2 R'",
+			"F R U' R' U' R U R' F' R U R' U' R' F R F'"
+		],
+		[
+			"L' U' L F L' U' L U L F' L2 U L U",
+			"R U R' F' R U R' U' R' F R2 U' R' U'",
+			"R U R' U R U R' F' R U R' U' R' F R2 U' R' U2 R U' R'",
+			"L' U' L U' L' U' L F L' U' L U L F' L2 U L U2 L' U L"
+		],
+		[
+			"R U R' F' R U2 R' U2 R' F R U R U2 R' U'",
+			"L' U' L F L' U2 L U2 L F' L' U' L' U2 L U"
+		],
+		[
+			"L2 F2 L' U2 L' U2 L F' L' U' L U L F' L2",
+			"L2 F L' U' L' U L F L' U2 L U2 L F2 L2",
+			"R2 F2 R U2 R U2 R' F R U R' U' R' F R2",
+			"R2 F' R U R U' R' F' R U2 R' U2 R' F2 R2"
 		]
 	]
 };
@@ -65,11 +100,17 @@ var pll = {
 					if (typeof plldata.id[i][j] != 'undefined') {
 						let span1 = document.createElement('span');
 						span1.innerHTML = 'PLL ' + plldata.id[i][j];
-						let br1 = document.createElement('br');
+						let br = document.createElement('br');
 						let svg = pll.style(i, j);
+						let span2 = document.createElement('span');
+						span2.innerHTML = plldata.formula[i][j];
 						pll.arr[i][j].appendChild(span1);
-						pll.arr[i][j].appendChild(br1);
+						pll.arr[i][j].appendChild(br);
 						pll.arr[i][j].appendChild(svg);
+						if (geturl['formula'] == '1') {
+							pll.arr[i][j].appendChild(br);
+							pll.arr[i][j].appendChild(span2);
+						}
 					}
 				}
 			}

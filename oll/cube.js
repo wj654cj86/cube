@@ -119,16 +119,15 @@ var oll = {
 					if (typeof olldata.id[i][j] != 'undefined') {
 						let span1 = document.createElement('span');
 						span1.innerHTML = 'OLL ' + olldata.id[i][j];
-						let br1 = document.createElement('br');
+						let br = document.createElement('br');
 						let svg = oll.style(olldata.id[i][j]);
-						let br2 = document.createElement('br');
 						let span2 = document.createElement('span');
 						span2.innerHTML = olldata.explanation[i][j];
 
 						oll.arr[i][j].appendChild(span1);
-						oll.arr[i][j].appendChild(br1);
+						oll.arr[i][j].appendChild(br);
 						oll.arr[i][j].appendChild(svg);
-						oll.arr[i][j].appendChild(br2);
+						oll.arr[i][j].appendChild(br);
 						oll.arr[i][j].appendChild(span2);
 					}
 				}
