@@ -29,7 +29,7 @@ var pll = {
 	reg: {},
 	file: 'pll/style.svg',
 	initial: function (callback) {
-		openfiletotext(oll.file, function (text) {
+		openfiletotext(pll.file, function (text) {
 			pll.text = text;
 			if (document.getElementById('puzzleup') === null) {
 				let puzzleup = document.createElementNS('http://www.w3.org/2000/svg', 'rect');

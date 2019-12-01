@@ -14,6 +14,7 @@ window.onload = function () {
 	}
 	generator(function* () {
 		if (page == 'oll') {
+			document.title = 'OLL分類';
 			yield {
 				nextfunc: oll.initial,
 				cbfunc: function () { }
@@ -23,6 +24,7 @@ window.onload = function () {
 				cbfunc: function () { }
 			};
 		} else {
+			document.title = 'PLL分類';
 			yield {
 				nextfunc: pll.initial,
 				cbfunc: function () { }
