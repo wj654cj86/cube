@@ -24,8 +24,8 @@ var plldata = {
 	],
 	formula: [
 		[
-			"M2 U M U2 M' U M2",
-			"M2 U' M U2 M' U' M2",
+			"L2 U' L' U' L U L U L U' L",
+			"R2' U R U R' U' R' U' R' U R'",
 			"r' U L' D2 L U' L' D2 L2",
 			"l U' R D2 R' U R D2 R2"
 		],
@@ -56,6 +56,14 @@ var plldata = {
 			"R2 F2 R U2 R U2 R' F R U R' U' R' F R2",
 			"R2 F' R U R U' R' F' R U2 R' U2 R' F2 R2"
 		]
+	],
+	description: [
+		["Ub鏡像，也可以Ub的反向公式", "", "", "Aa鏡像，也可以轉向後用Aa的反向"],
+		["全MU公式", "全MU公式", "OLL 24 + OLL 25"],
+		["R' U' F'(T perm)F U R，且F' F抵銷", "OLL 33 + OLL 37，且R F' F R合併為R2", "", "OLL 37 + OLL 33"],
+		["Jb鏡像", "", "R U R' U(Jb perm)U' R U' R'，且U' U'合併為U2", "Na鏡像"],
+		["", "Ra鏡像"],
+		["Gc鏡像", "Ga反向", "", "Gc反向"]
 	]
 };
 
@@ -91,15 +99,20 @@ var pll = {
 						let td = document.createElement('td');
 						let td2 = document.createElement('td');
 						let td3 = document.createElement('td');
+						let td4 = document.createElement('td');
 						td.style.height = '70px';
 						td2.style.height = '70px';
 						td3.style.height = '70px';
-						td3.style.width = '500px';
+						td3.style.width = '400px';
 						td3.style.textAlign = "left";
-						pll.arr[i][j] = [td, td2, td3];
+						td4.style.height = '70px';
+						td4.style.width = '400px';
+						td4.style.textAlign = "left";
+						pll.arr[i][j] = [td, td2, td3, td4];
 						tr.appendChild(td);
 						tr.appendChild(td2);
 						tr.appendChild(td3);
+						tr.appendChild(td4);
 						table.appendChild(tr);
 					}
 				}
@@ -114,9 +127,12 @@ var pll = {
 							let svg = pll.style(i, j);
 							let span2 = document.createElement('span');
 							span2.innerHTML = '&nbsp;&nbsp;&nbsp;' + plldata.formula[i][j];
+							let span3 = document.createElement('span');
+							span3.innerHTML = '&nbsp;&nbsp;&nbsp;' + plldata.description[i][j];
 							pll.arr[i][j][0].appendChild(span1);
 							pll.arr[i][j][1].appendChild(svg);
 							pll.arr[i][j][2].appendChild(span2);
+							pll.arr[i][j][3].appendChild(span3);
 						}
 					}
 				}
