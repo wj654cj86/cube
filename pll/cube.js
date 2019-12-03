@@ -87,6 +87,15 @@ var pll = {
 	text: {},
 	reg: {},
 	file: 'pll/style.svg',
+	icon: function (callback) {
+		svgtopngurl(pll.style(5, 0), function (url) {
+			let lk = document.createElement('link');
+			lk.setAttribute('rel', 'icon');
+			lk.setAttribute('href', url);
+			document.getElementsByTagName("head")[0].appendChild(lk);
+			callback();
+		});
+	},
 	initial: function (callback) {
 		openfiletotext(pll.file, function (text) {
 			pll.text = text;
@@ -202,8 +211,11 @@ var pll = {
 		}
 	},
 	style: function (i, j) {
-		let svg = text2xml(pll.text);
 		let id = plldata.id[i][j];
+		if (id in pll.reg) {
+			return pll.reg[id];
+		}
+		let svg = text2xml(pll.text);
 		let script = plldata.script[i][j];
 		for (let i in script) {
 			let it = script[i];

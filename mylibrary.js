@@ -87,6 +87,11 @@ function text2xml(text) {
 	return parser.parseFromString(text, "text/xml");
 }
 
+function xml2text(xml) {
+	let xsl = new XMLSerializer();
+	return xsl.serializeToString(xml);
+}
+
 function generator(genfunc) {
 	var g = genfunc();
 
@@ -125,4 +130,30 @@ function loadsound(src, callback) {
 			callback(URL.createObjectURL(blob));
 		}
 	}
+}
+
+function svgtoimg(svg, callback) {
+	let svgstring = xml2text(svg);
+	let img = new Image();
+	let blob = new Blob([svgstring], { type: 'image/svg+xml' });
+	let url = URL.createObjectURL(blob);
+	img.onload = function () {
+		callback();
+	};
+	img.src = url;
+	return img;
+}
+
+function svgtopngurl(svg, callback) {
+	let img = svgtoimg(svg, function () {
+		let c = document.createElement("canvas");
+		c.setAttribute('width', img.naturalWidth);
+		c.setAttribute('height', img.naturalHeight);
+		let ctx = c.getContext("2d");
+		ctx.drawImage(img, img.naturalWidth, img.naturalHeight);
+		c.toBlob(function (blob) {
+			let url = URL.createObjectURL(blob);
+			callback(url);
+		});
+	});
 }

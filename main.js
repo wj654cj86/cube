@@ -29,6 +29,10 @@ window.onload = function () {
 				nextfunc: pll.initial,
 				cbfunc: function () { }
 			};
+			// yield {
+			// 	nextfunc: pll.icon,
+			// 	cbfunc: function () { }
+			// };
 			yield {
 				nextfunc: pll.build,
 				cbfunc: function () { }

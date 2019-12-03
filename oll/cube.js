@@ -136,6 +136,9 @@ var oll = {
 		}
 	},
 	style: function (id) {
+		if (id in oll.reg) {
+			return oll.reg[id];
+		}
 		let svg = text2xml(oll.text);
 		let script = olldata.script[id - 1];
 		let face = [[], [], []];
