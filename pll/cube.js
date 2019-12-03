@@ -67,9 +67,9 @@ var plldata = {
 	],
 	explanation: [
 		["Ub鏡像", "全RU公式", "　", "Aa鏡像"],
-		["全MU公式", "全MU公式", "O25 + O24"],
-		["R'U'F'(T-perm)FUR", "O33 + O37", "　", "O37 + O33"],
-		["Jb鏡像", "RUR'F'(O33)FRU'R'", "RUR'U(Jb-perm)U'RU'R'", "Na鏡像"],
+		["全MU公式", "全MU公式", "OLL 25 + OLL 24"],
+		["R'U'F'(T-perm)FUR", "OLL 33 + OLL 37", "　", "OLL 37 + OLL 33"],
+		["Jb鏡像", "RUR'F'(OLL 33)FRU'R'", "RUR'U(Jb-perm)U'RU'R'", "Na鏡像"],
 		["　", "Ra鏡像"],
 		["Gc鏡像", "Ga反向", "　", "Gc反向"]
 	],
