@@ -1,6 +1,14 @@
 var plldata = {
 	h: 6,
 	w: 4,
+	name: [
+		'基本',
+		'2段PLL',
+		'OLL組合',
+		'J-perm',
+		'R-perm',
+		'G-perm'
+	],
 	id: [
 		['Ua', 'Ub', 'Aa', 'Ab'],
 		['H', 'Z', 'E'],
@@ -25,44 +33,52 @@ var plldata = {
 	formula: [
 		[
 			"L2 U' L' U' L U L U L U' L",
-			"R2' U R U R' U' R' U' R' U R'",
+			"R2 U R U R' U' R' U' R' U R'",
 			"r' U L' D2 L U' L' D2 L2",
 			"l U' R D2 R' U R D2 R2"
 		],
 		[
 			"M2 U M2 U2 M2 U M2",
 			"M2 U M2 U M' U2 M2 U2 M' U2",
-			"l U' R' D R U R' D' R U R' D R U' R' D'"
+			"(l U' R' D R U R' D') (R U R' D R U' R' D')"
 		],
 		[
-			"R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R",
-			"R U R' U' R' F R2 U' R' U' R U R' F'",
+			"R' U' F' (R U R' U' R' F) R2 (U' R' U' R U R') U R",
+			"(R U R' U' R' F) R2 (U' R' U' R U R' F')",
 			"L' U R U' L U L' U R' U' L U2 R U2 R'",
-			"F R U' R' U' R U R' F' R U R' U' R' F R F'"
+			"(F R U' R' U' R U R' F') (R U R' U' R' F R F')"
 		],
 		[
-			"L' U' L F L' U' L U L F' L2 U L U",
-			"R U R' F' R U R' U' R' F R2 U' R' U'",
-			"R U R' U R U R' F' R U R' U' R' F R2 U' R' U2 R U' R'",
-			"L' U' L U' L' U' L F L' U' L U L F' L2 U L U2 L' U L"
+			"L' U' L F (L' U' L U L F') L2 U L (U)",
+			"R U R' F' (R U R' U' R' F) R2 U' R' (U')",
+			"R U R' U (R U R' F' (R U R' U' R' F) R2 U' R') U2 R U' R'",
+			"L' U' L U' (L' U' L F (L' U' L U L F') L2 U L) U2 L' U L"
 		],
 		[
-			"R U R' F' R U2 R' U2 R' F R U R U2 R' U'",
-			"L' U' L F L' U2 L U2 L F' L' U' L' U2 L U"
+			"R U R' F' (R U2 R' U2 R' F R U R) U2 R' (U')",
+			"L' U' L F (L' U2 L U2 L F' L' U' L') U2 L (U)"
 		],
 		[
-			"L2 F2 L' U2 L' U2 L F' L' U' L U L F' L2",
-			"L2 F L' U' L' U L F L' U2 L U2 L F2 L2",
-			"R2 F2 R U2 R U2 R' F R U R' U' R' F R2",
-			"R2 F' R U R U' R' F' R U2 R' U2 R' F2 R2"
+			"(L2 F2 L' U2 L' U2 L) (F' L' U' L U) (L F' L2)",
+			"(L2 F) (L' U' L' U L) F (L' U2 L U2 L F2 L2)",
+			"(R2 F2 R U2 R U2 R') (F R U R' U') (R' F R2)",
+			"(R2 F') (R U R U' R') F' (R U2 R' U2 R' F2 R2)"
 		]
 	],
+	explanation: [
+		["Ub鏡像", "全RU公式", "　", "Aa鏡像"],
+		["全MU公式", "全MU公式", "O25 + O24"],
+		["R'U'F'(T-perm)FUR", "O33 + O37", "　", "O37 + O33"],
+		["Jb鏡像", "RUR'F'(O33)FRU'R'", "RUR'U(Jb-perm)U'RU'R'", "Na鏡像"],
+		["　", "Ra鏡像"],
+		["Gc鏡像", "Ga反向", "　", "Gc反向"]
+	],
 	description: [
-		["Ub鏡像，也可以Ub的反向公式", "", "", "Aa鏡像，也可以轉向後用Aa的反向"],
-		["全MU公式", "全MU公式", "OLL 24 + OLL 25"],
-		["R' U' F'(T perm)F U R，且F' F抵銷", "OLL 33 + OLL 37，且R F' F R合併為R2", "", "OLL 37 + OLL 33"],
-		["Jb鏡像", "", "R U R' U(Jb perm)U' R U' R'，且U' U'合併為U2", "Na鏡像"],
-		["", "Ra鏡像"],
+		["Ub鏡像，也可以Ub的反向公式", "全RU公式", "", "Aa鏡像，也可以轉向後用Aa的反向"],
+		["全MU公式", "全MU公式", "OLL 25 + OLL 24，因為OLL 25已經轉向，OLL 24開頭改為R"],
+		["R' U' F' (T-perm) F U R，且F' F抵銷", "OLL 33 + OLL 37，且R F' F R合併為R2", "", "OLL 37 + OLL 33"],
+		["Jb鏡像", "R U R' F' (OLL 33) F R U' R'，且R F' F R合併為R2，最後U'校正", "R U R' U (Jb-perm) U' R U' R'，且U' U'合併為U2", "Na鏡像"],
+		["最後U'校正", "Ra鏡像"],
 		["Gc鏡像", "Ga反向", "", "Gc反向"]
 	]
 };
@@ -93,6 +109,14 @@ var pll = {
 			let table = document.createElement('table');
 			for (let i = 0; i < plldata.h; i++) {
 				pll.arr[i] = [];
+				let tr = document.createElement('tr');
+				let td = document.createElement('td');
+				td.style.height = '20px';
+				td.style.textAlign = "left";
+				td.setAttribute('colspan', '4');
+				pll.arr[i][-1] = td;
+				tr.appendChild(td);
+				table.appendChild(tr);
 				for (let j = 0; j < plldata.w; j++) {
 					if (typeof plldata.id[i][j] != 'undefined') {
 						let tr = document.createElement('tr');
@@ -103,10 +127,10 @@ var pll = {
 						td.style.height = '70px';
 						td2.style.height = '70px';
 						td3.style.height = '70px';
-						td3.style.width = '400px';
+						td3.style.width = '500px';
 						td3.style.textAlign = "left";
 						td4.style.height = '70px';
-						td4.style.width = '400px';
+						td4.style.width = '500px';
 						td4.style.textAlign = "left";
 						pll.arr[i][j] = [td, td2, td3, td4];
 						tr.appendChild(td);
@@ -120,10 +144,11 @@ var pll = {
 			plldiv.appendChild(table);
 			for (let i = 0; i < plldata.h; i++) {
 				if (typeof plldata.id[i] != 'undefined') {
+					pll.arr[i][-1].innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + plldata.name[i];
 					for (let j = 0; j < plldata.w; j++) {
 						if (typeof plldata.id[i][j] != 'undefined') {
 							let span1 = document.createElement('span');
-							span1.innerHTML = 'PLL ' + plldata.id[i][j];
+							span1.innerHTML = plldata.id[i][j] + '-perm';
 							let svg = pll.style(i, j);
 							let span2 = document.createElement('span');
 							span2.innerHTML = '&nbsp;&nbsp;&nbsp;' + plldata.formula[i][j];
@@ -142,8 +167,9 @@ var pll = {
 			for (let i = 0; i < plldata.h; i++) {
 				let tr = document.createElement('tr');
 				pll.arr[i] = [];
-				for (let j = 0; j < plldata.w; j++) {
+				for (let j = -1; j < plldata.w; j++) {
 					let td = document.createElement('td');
+					td.style.width = '200px';
 					pll.arr[i][j] = td;
 					tr.appendChild(td);
 				}
@@ -153,15 +179,22 @@ var pll = {
 
 			for (let i = 0; i < plldata.h; i++) {
 				if (typeof plldata.id[i] != 'undefined') {
+					pll.arr[i][-1].innerHTML = plldata.name[i];
+					pll.arr[i][-1].style.width = '80px';
 					for (let j = 0; j < plldata.w; j++) {
 						if (typeof plldata.id[i][j] != 'undefined') {
 							let span1 = document.createElement('span');
-							span1.innerHTML = 'PLL ' + plldata.id[i][j];
-							let br = document.createElement('br');
+							span1.innerHTML = plldata.id[i][j] + '-perm';
+							let br1 = document.createElement('br');
 							let svg = pll.style(i, j);
+							let br2 = document.createElement('br');
+							let span2 = document.createElement('span');
+							span2.innerHTML = plldata.explanation[i][j];
 							pll.arr[i][j].appendChild(span1);
-							pll.arr[i][j].appendChild(br);
+							pll.arr[i][j].appendChild(br1);
 							pll.arr[i][j].appendChild(svg);
+							pll.arr[i][j].appendChild(br2);
+							pll.arr[i][j].appendChild(span2);
 						}
 					}
 				}

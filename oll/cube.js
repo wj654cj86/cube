@@ -12,6 +12,17 @@ var olldata = {
 		'特殊Pair移動',
 		'無特定分類'
 	],
+	id: [
+		[43, 44, 45, 47, 48, 51],
+		[21, 22, 23, 24, 25, 26, 27],
+		[20, 28, 57],
+		[8, 7, 5, 6, 53, 54, 18],
+		[33, 37, 32, 31, 40, 39, 29, 30],
+		[4, 3, 11, 12],
+		[17, 19, 36, 38, 42, 41, 52],
+		[34, 49, 50, 1, 2, 35, 46, 55],
+		[13, 14, 9, 10, 15, 16, 56]
+	],
 	script: [
 		'lbrlurlfr', 'bbrlurffr', 'bbulurlff', 'ubblurffr', 'bbrluuluu', //1~5
 		'lbbuuruur', 'bbuluuluf', 'ubbuurfur', 'lubluuufr', 'buruurlfu',
@@ -25,17 +36,6 @@ var olldata = {
 		'uurluruur', 'bubuurlfr', 'bubluulfr', 'bbbluulur', 'bbbuurlur',
 		'lurlurfuf', 'burlurfur', 'lbrluulur', 'lbruurlur', 'lurlurlur', //51~55
 		'lbruuulfr', 'ubuuuuufu'
-	],
-	id: [
-		[43, 44, 45, 47, 48, 51],
-		[21, 22, 23, 24, 25, 26, 27],
-		[20, 28, 57],
-		[8, 7, 5, 6, 53, 54, 18],
-		[33, 37, 32, 31, 40, 39, 29, 30],
-		[4, 3, 11, 12],
-		[17, 19, 36, 38, 42, 41, 52],
-		[34, 49, 50, 1, 2, 35, 46, 55],
-		[13, 14, 9, 10, 15, 16, 56]
 	],
 	explanation: [
 		['順', '鏡', '反', '反2次', '反鏡2次', '順2次'],
@@ -119,15 +119,16 @@ var oll = {
 					if (typeof olldata.id[i][j] != 'undefined') {
 						let span1 = document.createElement('span');
 						span1.innerHTML = 'OLL ' + olldata.id[i][j];
-						let br = document.createElement('br');
+						let br1 = document.createElement('br');
 						let svg = oll.style(olldata.id[i][j]);
+						let br2 = document.createElement('br');
 						let span2 = document.createElement('span');
 						span2.innerHTML = olldata.explanation[i][j];
 
 						oll.arr[i][j].appendChild(span1);
-						oll.arr[i][j].appendChild(br);
+						oll.arr[i][j].appendChild(br1);
 						oll.arr[i][j].appendChild(svg);
-						oll.arr[i][j].appendChild(br);
+						oll.arr[i][j].appendChild(br2);
 						oll.arr[i][j].appendChild(span2);
 					}
 				}
