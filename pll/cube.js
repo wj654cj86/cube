@@ -45,7 +45,7 @@ var plldata = {
 		[
 			"R' U' F' (R U R' U' R' F) R2 (U' R' U' R U R') U R",
 			"(R U R' U' R' F) R2 (U' R' U' R U R' F')",
-			"L' U R U' L U L' U R' U' L U2 R U2 R'",
+			"z U' R D R' U R U' R D' R' U R2 D R2 D' z'",
 			"(F R U' R' U' R U R' F') (R U R' U' R' F R F')"
 		],
 		[
