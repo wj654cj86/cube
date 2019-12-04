@@ -88,7 +88,11 @@ var pll = {
 	reg: {},
 	file: 'pll/style.svg',
 	icon: function (callback) {
-		svgtopngurl(pll.style(5, 0), function (url) {
+		let temp = copyxml(pll.style(5, 0)).getElementsByTagName('svg')[0];
+		let defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+		defs.appendChild(copyxml(refpiece).getElementsByTagName('svg')[0]);
+		temp.appendChild(defs);
+		svgtopngurl(temp, function (url) {
 			let lk = document.createElement('link');
 			lk.setAttribute('rel', 'icon');
 			lk.setAttribute('href', url);

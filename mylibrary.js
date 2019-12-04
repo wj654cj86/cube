@@ -92,6 +92,10 @@ function xml2text(xml) {
 	return xsl.serializeToString(xml);
 }
 
+function copyxml(xml) {
+	return text2xml(xml2text(xml));
+}
+
 function generator(genfunc) {
 	var g = genfunc();
 
@@ -150,7 +154,7 @@ function svgtopngurl(svg, callback) {
 		c.setAttribute('width', img.naturalWidth);
 		c.setAttribute('height', img.naturalHeight);
 		let ctx = c.getContext("2d");
-		ctx.drawImage(img, img.naturalWidth, img.naturalHeight);
+		ctx.drawImage(img, 0, 0);
 		c.toBlob(function (blob) {
 			let url = URL.createObjectURL(blob);
 			callback(url);

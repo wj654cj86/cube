@@ -54,6 +54,19 @@ var oll = {
 	text: {},
 	reg: {},
 	file: 'oll/style.svg',
+	icon: function (callback) {
+		let temp = copyxml(oll.style(43)).getElementsByTagName('svg')[0];
+		let defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+		defs.appendChild(copyxml(refpiece).getElementsByTagName('svg')[0]);
+		temp.appendChild(defs);
+		svgtopngurl(temp, function (url) {
+			let lk = document.createElement('link');
+			lk.setAttribute('rel', 'icon');
+			lk.setAttribute('href', url);
+			document.getElementsByTagName("head")[0].appendChild(lk);
+			callback();
+		});
+	},
 	initial: function (callback) {
 		openfiletotext(oll.file, function (text) {
 			oll.text = text;
