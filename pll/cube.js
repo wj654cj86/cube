@@ -76,7 +76,7 @@ var plldata = {
 	description: [
 		["Ub鏡像，也可以Ub的反向公式", "全RU公式", "", "Aa鏡像，也可以轉向後用Aa的反向"],
 		["全MU公式", "全MU公式", "OLL 25 + OLL 24，因為OLL 25已經轉向，OLL 24開頭改為R"],
-		["R' U' F' (T-perm) F U R，且F' F抵銷", "OLL 33 + OLL 37，且R F' F R合併為R2", "", "OLL 37 + OLL 33"],
+		["R' U' F' (T-perm) F U R，且F' F抵銷", "OLL 33 + OLL 37，且R F' F R合併為R2，注意OLL 37公式不一樣", "", "OLL 37 + OLL 33，注意OLL 37公式不一樣"],
 		["Jb鏡像", "R U R' F' (OLL 33) F R U' R'，且R F' F R合併為R2，最後U'校正", "R U R' U (Jb-perm) U' R U' R'，且U' U'合併為U2", "Na鏡像"],
 		["最後U'校正", "Ra鏡像"],
 		["Gc鏡像", "Ga反向", "", "Gc反向"]
