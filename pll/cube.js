@@ -59,10 +59,10 @@ var plldata = {
 			"L' U' L F (L' U2 L U2 L F' L' U' L') U2 L (U)"
 		],
 		[
-			"(L2 F2 L' U2 L' U2 L) (F' L' U' L U) (L F' L2)",
-			"(L2 F) (L' U' L' U L) F (L' U2 L U2 L F2 L2)",
-			"(R2 F2 R U2 R U2 R') (F R U R' U') (R' F R2)",
-			"(R2 F') (R U R U' R') F' (R U2 R' U2 R' F2 R2)"
+			"(L2 F2 L' U2 L' U2 L F') (L' U' L U L F') (L2)",
+			"(L2) (F L' U' L' U L) (F L' U2 L U2 L F2 L2)",
+			"(R2 F2 R U2 R U2 R' F) (R U R' U' R' F) (R2)",
+			"(R2) (F' R U R U' R') (F' R U2 R' U2 R' F2 R2)"
 		]
 	],
 	explanation: [
@@ -79,7 +79,7 @@ var plldata = {
 		["R' U' F' (T-perm) F U R，且F' F抵銷", "OLL 33 + OLL 37，且R F' F R合併為R2，注意OLL 37公式不一樣", "", "OLL 37 + OLL 33，注意OLL 37公式不一樣"],
 		["Jb鏡像", "R U R' F' (OLL 33) F R U' R'，且R F' F R合併為R2，最後U'校正", "R U R' U (Jb-perm) U' R U' R'，且U' U'合併為U2", "Na鏡像"],
 		["最後U'校正", "Ra鏡像"],
-		["Gc鏡像", "Ga反向", "", "Gc反向"]
+		["Gc鏡像", "Ga反向", "後半段是(OLL 33) F R，且R F' F R合併為R2", "Gc反向"]
 	]
 };
 
