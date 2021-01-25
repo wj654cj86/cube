@@ -68,7 +68,7 @@ var oll = {
 		});
 	},
 	initial: function (callback) {
-		openfiletotext(oll.file, function (text) {
+		openfile(oll.file, function (text) {
 			oll.text = text;
 			if (document.getElementById('puzzleup') === null) {
 				let puzzleup = document.createElementNS('http://www.w3.org/2000/svg', 'rect');

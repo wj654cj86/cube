@@ -72,16 +72,7 @@ function openfile(url, callback) {
 	oReq.open("GET", url);
 	oReq.send();
 }
-function openfiletotext(url, callback) {
-	let oReq = new XMLHttpRequest();
-	oReq.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
-			callback(oReq.responseText);
-		}
-	};
-	oReq.open("GET", url, true);
-	oReq.send();
-}
+
 function text2xml(text) {
 	let parser = new DOMParser();
 	return parser.parseFromString(text, "text/xml");

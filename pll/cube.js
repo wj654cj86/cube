@@ -101,7 +101,7 @@ var pll = {
 		});
 	},
 	initial: function (callback) {
-		openfiletotext(pll.file, function (text) {
+		openfile(pll.file, function (text) {
 			pll.text = text;
 			if (document.getElementById('puzzleup') === null) {
 				let puzzleup = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
