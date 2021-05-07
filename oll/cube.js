@@ -219,7 +219,7 @@ var oll = (() => {
 							button.innerHTML = '顯示動畫';
 							button.onclick = () => {
 								let iframe = document.createElement('iframe');
-								iframe.src = '/alg/?type=alg&stage=OLL&view=fullscreen&alg=' + data.formula[data.id[i][j]].replace(/'/g, '-').replace(/ /g, '_');
+								iframe.src = '/alg/?type=alg&stage=OLL&view=fullscreen&cycleView=disabled&alg=' + data.formula[data.id[i][j]].replace(/'/g, '-').replace(/ /g, '_');
 								iframe.frameBorder = 0;
 								arr[i][j][4].appendChild(iframe);
 								let div = document.createElement('div');

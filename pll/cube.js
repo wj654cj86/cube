@@ -203,7 +203,7 @@ var pll = (() => {
 							button.innerHTML = '顯示動畫';
 							button.onclick = () => {
 								let iframe = document.createElement('iframe');
-								iframe.src = `/alg/?type=alg&view=fullscreen${data.setup[i][j] == "" ? '' : '&setup=' + data.setup[i][j].replace(/'/g, '-').replace(/ /g, '_')}&alg=${data.formula[i][j].replace(/'/g, '-').replace(/ /g, '_')}`
+								iframe.src = `/alg/?type=alg&view=fullscreen&cycleView=disabled${data.setup[i][j] == "" ? '' : '&setup=' + data.setup[i][j].replace(/'/g, '-').replace(/ /g, '_')}&alg=${data.formula[i][j].replace(/'/g, '-').replace(/ /g, '_')}`
 								iframe.frameBorder = 0;
 								arr[i][j][4].appendChild(iframe);
 								let div = document.createElement('div');
