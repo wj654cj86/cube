@@ -55,6 +55,17 @@ td {
 	text-align      : left;
 }
 
+.alg {
+	background-color: #ffdbff;
+	height : 70px;
+	padding: 0px;
+}
+
+.alg iframe {
+	width : 150px;
+	height: 150px;
+}
+
 .group,
 .formula,
 .description {
@@ -83,7 +94,8 @@ td {
 }
 
 #loadpage button {
-	width    : 110px;
-	height   : 30px;
-	font-size: 16px;
+	font-family: Consolas, Microsoft JhengHei;
+	width      : 110px;
+	height     : 30px;
+	font-size  : 16px;
 }

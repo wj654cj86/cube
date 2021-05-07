@@ -181,15 +181,19 @@ var oll = (() => {
 						let td2 = document.createElement('td');
 						let td3 = document.createElement('td');
 						let td4 = document.createElement('td');
+						let td5 = document.createElement('td');
 						td.className = 'name';
 						td.rowSpan = '2';
 						td2.className = 'img';
 						td2.rowSpan = '2';
 						td3.className = 'formula';
 						td4.className = 'description';
-						arr[i][j] = [td, td2, td3, td4];
+						td5.className = 'alg';
+						td5.rowSpan = '2';
+						arr[i][j] = [td, td2, td3, td4, td5];
 						tr.appendChild(td);
 						tr.appendChild(td2);
+						tr.appendChild(td5);
 						tr.appendChild(td3);
 						tr2.appendChild(td4);
 						main.appendChild(tr);
@@ -206,15 +210,26 @@ var oll = (() => {
 							span1.innerHTML = 'OLL-' + data.id[i][j];
 							let svg = copyxml(style(data.id[i][j])).getElementsByTagName('svg')[0];
 							let a = document.createElement('a');
-							a.href = 'https://alg.cubing.net/?type=alg&stage=OLL&alg=' + data.formula[data.id[i][j]].replace(/'/g, '-').replace(/ /g, '_');
+							a.href = '/alg/?type=alg&stage=OLL&alg=' + data.formula[data.id[i][j]].replace(/'/g, '-').replace(/ /g, '_');
 							a.innerHTML = data.formula[data.id[i][j]];
 							a.target = '_blank';
 							let span3 = document.createElement('span');
 							span3.innerHTML = data.description[i][j];
+							let button = document.createElement('button');
+							button.innerHTML = '顯示動畫';
+							button.onclick = () => {
+								let iframe = document.createElement('iframe');
+								iframe.src = '/alg/?type=alg&stage=OLL&view=fullscreen&alg=' + data.formula[data.id[i][j]].replace(/'/g, '-').replace(/ /g, '_');
+								iframe.frameBorder = 0;
+								arr[i][j][4].appendChild(iframe);
+								let div = document.createElement('div');
+								div.append(button);
+							};
 							arr[i][j][0].appendChild(span1);
 							arr[i][j][1].appendChild(svg);
 							arr[i][j][2].appendChild(a);
 							arr[i][j][3].appendChild(span3);
+							arr[i][j][4].appendChild(button);
 						}
 					}
 				}
