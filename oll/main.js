@@ -171,34 +171,32 @@ function q(script) {
 	return data.join('');
 }
 
-window.onload = function () {
+window.onload = async function () {
 	refpiece.setAttribute('xmlns', "http://www.w3.org/2000/svg");
 	refpiece.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
-	generator(function* () {
-		oll.file = 'style.svg';
-		yield {
-			nextfunc: oll.initial,
-			cbfunc: function () { }
-		};
-	});
+	await oll.initial('style.svg','defs.svg');
 	svgdone.onclick = function () {
 		olldiv.innerHTML = '';
-		olldata.script[-1] = svgscript.value;
+		oll.data.script[0] = svgscript.value;
+		delete oll.reg[0];
 		olldiv.appendChild(oll.style(0));
 	};
 	svgp.onclick = function () {
 		olldiv.innerHTML = '';
-		olldata.script[-1] = svgscript.value = p(svgscript.value);
+		oll.data.script[0] = svgscript.value = p(svgscript.value);
+		delete oll.reg[0];
 		olldiv.appendChild(oll.style(0));
 	};
 	svgn.onclick = function () {
 		olldiv.innerHTML = '';
-		olldata.script[-1] = svgscript.value = p(p(p(svgscript.value)));
+		oll.data.script[0] = svgscript.value = p(p(p(svgscript.value)));
+		delete oll.reg[0];
 		olldiv.appendChild(oll.style(0));
 	};
 	svgq.onclick = function () {
 		olldiv.innerHTML = '';
-		olldata.script[-1] = svgscript.value = q(svgscript.value);
+		oll.data.script[0] = svgscript.value = q(svgscript.value);
+		delete oll.reg[0];
 		olldiv.appendChild(oll.style(0));
 	};
 };

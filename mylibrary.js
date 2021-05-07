@@ -54,6 +54,35 @@ function array2url(arr) {
 	window.history.pushState({}, 0, url + strUrl + location.hash);
 }
 
+function obj2get(obj) {
+	var allData = [];
+	for (var i in obj) {
+		allData.push(i + '=' + encodeURIComponent(obj[i]));
+	}
+	var strUrl = allData.length != 0 ? ('?' + allData.join('&')) : '';
+	return strUrl;
+}
+
+function promise(callback, ...args) {
+	return new Promise((resolve, reject) => {
+		callback(...args, (data) => {
+			resolve(data);
+		});
+	});
+}
+
+function promisearr(callback, ...args) {
+	return new Promise((resolve, reject) => {
+		callback(...args, (...args) => {
+			resolve(args);
+		});
+	});
+}
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function openfile(url, callback) {
 	if (typeof callback == "undefined") {
 		callback = function (str) { };
@@ -87,23 +116,6 @@ function copyxml(xml) {
 	return text2xml(xml2text(xml));
 }
 
-function generator(genfunc) {
-	var g = genfunc();
-
-	function next() {
-		let res = g.next();
-		if (!res.done) {
-			if (typeof res.value.argsfront != 'object') res.value.argsfront = [];
-			if (typeof res.value.argsback != 'object') res.value.argsback = [];
-			res.value.nextfunc(...res.value.argsfront, function (...args) {
-				res.value.cbfunc(...args);
-				next();
-			}, ...res.value.argsback);
-		}
-	}
-	next();
-}
-
 function getimgsize(imgsrc, callback) {
 	let a = new Image();
 	a.onload = function () {
@@ -114,6 +126,15 @@ function getimgsize(imgsrc, callback) {
 	};
 	a.src = imgsrc;
 }
+
+function loadimg(imgsrc, callback) {
+	let img = new Image();
+	img.onload = function () {
+		callback(img);
+	};
+	img.src = imgsrc;
+}
+
 function loadsound(src, callback) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', src);
@@ -151,4 +172,129 @@ function svgtopngurl(svg, callback) {
 			callback(url);
 		});
 	});
+}
+
+function pngtobase64(imgsrc, callback) {
+	let img = new Image();
+	img.onload = function () {
+		let c = document.createElement("canvas");
+		c.setAttribute('width', img.naturalWidth);
+		c.setAttribute('height', img.naturalHeight);
+		let ctx = c.getContext("2d");
+		ctx.drawImage(img, 0, 0);
+		callback(c.toDataURL());
+	};
+	img.src = imgsrc;
+}
+
+function getclickpoint(event, element) {
+	return {
+		x: event.clientX - element.offsetLeft + document.documentElement.scrollLeft + document.body.scrollLeft,
+		y: event.clientY - element.offsetTop + document.documentElement.scrollTop + document.body.scrollTop
+	};
+}
+
+function getCursorPosition(event) {
+	let posx = 0;
+	let posy = 0;
+	if (!event) event = window.event;
+	if (event.pageX || event.pageY) {
+		posx = event.pageX - document.documentElement.scrollLeft - document.body.scrollLeft;
+		posy = event.pageY - document.documentElement.scrollTop - document.body.scrollTop;
+	} else if (event.clientX || event.clientY) {
+		posx = event.clientX;
+		posy = event.clientY;
+	}
+	return { x: posx, y: posy };
+}
+
+function startDownload(url, name) {
+	let download = document.createElement('a');
+	download.href = url;
+	download.download = name;
+	download.click();
+}
+
+function arrsum(arr) {
+	let sum = 0;
+	let len = arr.length;
+	for (let i = 0; i < len; i++) {
+		sum += arr[i] * 1;
+	}
+	return sum;
+}
+function arraverage(arr) {
+	let len = arr.length;
+	if (len != 0)
+		return arrsum(arr) / len;
+	else
+		return 0;
+}
+function arrsd(arr) {
+	let sum = 0;
+	let average = arraverage(arr);
+	let len = arr.length;
+	for (let i = 0; i < len; i++) {
+		let k = arr[i] - average;
+		sum += k * k;
+	}
+	return Math.sqrt(sum / len);
+}
+
+function componentToHex(c) {
+	c = Math.floor(c * 1);
+	var hex = c.toString(16);
+	return paddingLeft(hex, 2);
+}
+
+function rgbToHex(r, g, b) {
+	return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+function hexToRgb(h) {
+	let r, g, b;
+	if (h.length == 4) {
+		r = 0x11 * ('0x' + h[1]);
+		g = 0x11 * ('0x' + h[2]);
+		b = 0x11 * ('0x' + h[3]);
+	} else {
+		r = 1 * ('0x' + h[1] + h[2]);
+		g = 1 * ('0x' + h[3] + h[4]);
+		b = 1 * ('0x' + h[5] + h[6]);
+	}
+	return [r, g, b];
+}
+
+Node.prototype.getElementsByAttributeValue = function (attribute, value) {
+	var dom = this.all || this.getElementsByTagName("*");
+	var match = new Array();
+	for (var i in dom) {
+		if ((typeof dom[i]) === "object") {
+			if (dom[i].getAttribute(attribute) == value) {
+				match.push(dom[i]);
+			}
+		}
+	}
+	return match;
+};
+
+Node.prototype.getElementByIdSvg = function (value) {
+	return this.getElementsByAttributeValue('id', value)[0];
+};
+
+function removeChild(node) {
+	if (node.parentNode) {
+		node.parentNode.removeChild(node);
+	}
+}
+
+function sentpost(url, obj) {
+	obj = obj || {};
+
+	let oReq = new XMLHttpRequest();
+	oReq.open("POST", url, true);
+	oReq.setRequestHeader('Content-Type', 'application/json');
+	oReq.onreadystatechange = function () {
+	};
+	oReq.send(JSON.stringify(obj));
 }
