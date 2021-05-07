@@ -67,7 +67,7 @@ var oll = (() => {
 			"S R U R' U' R' U' R' U R S'",
 			//21
 			"R U2 R' U' R U R' U' R U' R'",
-			"R U2 R2 U' R2 U' R2 U2 R",
+			"R U2' R2' U' R2 U' R2' U2' R",
 			"R2 D' R U2 R' D R U2 R",
 			"l U R' D R U' R' D' x",
 			"l U' R' D R U R' D' x",
