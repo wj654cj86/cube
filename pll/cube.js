@@ -69,36 +69,36 @@ var pll = (() => {
 		formula: [
 			[
 				"L2 U' L' U' L U L U L U' L",
-				"R2 U R U R' U' R' U' R' U R'",
-				"r' U L' D2 L U' L' D2 L2",
+				"R2' U R U R' U' R' U' R' U R'",
+				"r' U L' D2' L U' L' D2' L2'",
 				"l U' R D2 R' U R D2 R2"
 			],
 			[
-				"M2 U M2 U2 M2 U M2",
-				"M2 U M2 U M' U2 M2 U2 M' U2",
+				"M2' U M2' U2 M2' U M2'",
+				"M2' U M2' U M' U2 M2' U2 M' U2",
 				"(l U' R' D R U R' D') (R U R' D R U' R' D')"
 			],
 			[
 				"R' U' F' (R U R' U' R' F) R2 (U' R' U' R U R') U R",
 				"(R U R' U' R' F) R2 (U' R' U' R U R' F')",
-				"z U' R D R' U R U' R D' R' U R2 D R2 D'",
+				"z U' R D R' U R U' R D' R' U R2 D R2' D'",
 				"(F R U' R' U' R U R' F') (R U R' U' R' F R F')"
 			],
 			[
-				"L' U' L F (L' U' L U L F') L2 U L (U)",
+				"L' U' L F (L' U' L U L F') L2' U L (U)",
 				"R U R' F' (R U R' U' R' F) R2 U' R' (U')",
-				"R U R' U (R U R' F' (R U R' U' R' F) R2 U' R') U2 R U' R'",
-				"L' U' L U' (L' U' L F (L' U' L U L F') L2 U L) U2 L' U L"
+				"R U R' U (R U R' F' (R U R' U' R' F) R2 U' R') U2' R U' R'",
+				"L' U' L U' (L' U' L F (L' U' L U L F') L2' U L) U2 L' U L"
 			],
 			[
-				"R U R' F' (R U2 R' U2 R' F R U R) U2 R' (U')",
-				"L' U' L F (L' U2 L U2 L F' L' U' L') U2 L (U)"
+				"R U R' F' (R U2 R' U2' R' F R U R) U2' R' (U')",
+				"L' U' L F (L' U2' L U2 L F' L' U' L') U2 L (U)"
 			],
 			[
-				"(L2 F2 L' U2 L' U2 L F') (L' U' L U L F') (L2)",
-				"(L2) (F L' U' L' U L) (F L' U2 L U2 L F2 L2)",
-				"(R2 F2 R U2 R U2 R' F) (R U R' U' R' F) (R2)",
-				"(R2) (F' R U R U' R') (F' R U2 R' U2 R' F2 R2)"
+				"(L2 F2' L' U2' L' U2 L F') (L' U' L U L F') (L2')",
+				"(L2) (F L' U' L' U L) (F L' U2' L U2 L F2 L2')",
+				"(R2' F2 R U2 R U2' R' F) (R U R' U' R' F) (R2)",
+				"(R2') (F' R U R U' R') (F' R U2 R' U2' R' F2' R2)"
 			]
 		],
 		explanation: [

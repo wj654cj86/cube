@@ -1,7 +1,7 @@
 var oll = (() => {
 	let data = {
 		h: 9,
-		w: 8,
+		w: 10,
 		name: [
 			'頂層十字',
 			'頂層轉角',
@@ -21,8 +21,8 @@ var oll = (() => {
 			[33, 37, 32, 31, 40, 39, 29, 30],
 			[4, 3, 11, 12],
 			[17, 19, 38, 36, 42, 41, 52],
-			[34, 50, 49, 1, 2, 35, 46, 55],
-			[13, 14, 9, 10, 15, 16, 56]
+			[13, 14, 9, 10, 34, 1, 2, 35, 46, 55],
+			[50, 49, 15, 16, 56]
 		],
 		script: [
 			'',
@@ -42,8 +42,8 @@ var oll = (() => {
 		formula: [
 			"",
 			//1
-			"R U2 R2 F R F' U2 R' F R F'",
-			"F R' F' R U2' F R' F' R2' U2' R'",
+			"R U2 R' (R' F R F') U2' (R' F R F')",
+			"(F R' F' R) U2 (F R' F' R) R U2' R'",
 			"(L U F U' F' L') y (L F U F' U' L')",
 			"(R' U' F' U F R) y' (R' F' U' F U R)",
 			"r' U2' R U R' U r",
@@ -51,13 +51,13 @@ var oll = (() => {
 			"l U2 L' U' L U' l'",
 			"l U L' U L U2' l'",
 			"r' U' R U' R' U2 r",
-			"R U R' U' R' F R2' U R' U' F'",
-			"L' U' L U L F' L2 U' L U F",
+			"R U R' U' R' F R2 U R' U' F'",
+			"L' U' L U L F' L2' U' L U F",
 			//11
 			"(R' F' U' F U R) y' (R' F' U' F U R)",
 			"(L F U F' U' L') y (L F U F' U' L')",
-			"F U R U' R2 F' R U R U' R'",
-			"F' U' L' U L2' F L' U' L' U L",
+			"F U R U' R2' F' R U R U' R'",
+			"F' U' L' U L2 F L' U' L' U L",
 			"r' U' r (R' U' R U) r' U r",
 
 			"l U l' (L U L' U') l U' l'",
@@ -81,8 +81,8 @@ var oll = (() => {
 			"S' (L' U' L U L F' L') f",
 			"S (R U R' U' R' F R) f'",
 			"R U R' U' R' F R F'",
-			"R U R2 U' R' F R U R U' F'",
-			"R U2 R2 F R F' R U2 R'",
+			"R U R2' U' R' F R U R U' F'",
+			"R U2 R2' F R F' R U2' R'",
 
 			"(L' U' L U' L') U (L U L F' L' F)",
 			"F R' F' R U R U' R'",
@@ -99,14 +99,14 @@ var oll = (() => {
 			"R' U' R' F R F' U R",
 			"R' (F' U' F U) (F' U' F U) R",
 			"L (F U F' U') (F U F' U') L'",
-			"l U' l2' U l2' U l2' U' l",
-			"r' U r2 U' r2 U' r2 U r'",
+			"l U' l2' U l2 U l2' U' l",
+			"r' U r2 U' r2' U' r2 U r'",
 			//51
 			"R' (U' F' U F) (U' F' U F) R",
 			"(R' U' R U' R') U (F' U F R)",
 			"r' U' R U' R' U R U' R' U2 r",
 			"l U L' U L U' L' U L U2' l'",
-			"R U2 R2 U' R U' R' U2 F R F'",
+			"R U2 R2' U' R U' R' U2 F R F'",
 
 			"r' U' r (U' R' U R) (U' R' U R) r' U r",
 			"R U R' U' M' U R U' r'"
@@ -119,8 +119,8 @@ var oll = (() => {
 			["順", "反", "S+順+S'", "S'+鏡+S", "S+反+S'", "S'+反鏡+S", "S'+順+US", "S+鏡+U'S'"],
 			["順+轉+反", "鏡+轉+反", "反+轉+反", "反鏡+轉+反"],
 			["十字+OLL33", "OLL17反", "七步+OLL33", "OLL38鏡", "七步+OLL45", "OLL42鏡", "七步+十字"],
-			["　", "　", "OLL50鏡", "　", "OLL1反", "　", "　", "　"],
-			["　", "OLL13鏡", "OLL13反", "OLL14反", "　", "OLL15鏡", "OLL15反2次"]
+			["　", "OLL13鏡", "OLL13反", "OLL14反", "　", "　", "OLL1反", "　", "　", "　"],
+			["　", "OLL50鏡", "　", "OLL15鏡", "OLL15反2次"]
 		],
 		description: [
 			["　", "OLL-43鏡像", "OLL-43反向", "OLL-45做2次，且R R'抵銷", "OLL-48鏡像", "OLL-43做2次，且R' R抵銷"],
@@ -130,8 +130,8 @@ var oll = (() => {
 			["　", "OLL-37反向", "S (OLL-33) S'，且F' S'合併為f'", "OLL-32鏡像", "OLL-32反向", "OLL-40鏡像", "S' (OLL-33) US", "OLL-29鏡像"],
 			["(OLL-43) y' (OLL-45)", "OLL-4鏡像", "(OLL-45) y' (OLL-45)", "OLL-12鏡像"],
 			["(OLL-43) (OLL33)", "OLL-17反向", "(七步) (OLL-33)，且U2 R' R U合併為U'", "OLL-38鏡像", "(七步) (OLL-45)", "OLL-42鏡像", "(七步) (OLL-43)，且U2 R R' U'合併為U"],
-			["　", "　", "OLL-50鏡像", "　", "OLL-1反向", "　", "　", "　"],
-			["　", "OLL-13鏡像", "OLL-13反向", "OLL-14反向", "　", "OLL-15鏡像", "OLL-15反向2次，且r' U r r' U' r抵銷"]
+			["　", "OLL-13鏡像", "OLL-13反向", "OLL-14反向", "　", "　", "OLL-1反向", "　", "　", "　"],
+			["　", "OLL-50鏡像", "　", "OLL-15鏡像", "OLL-15反向2次，且r' U r r' U' r抵銷"]
 		]
 	};
 	let text = '';
