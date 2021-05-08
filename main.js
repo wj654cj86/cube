@@ -17,21 +17,21 @@ window.onload = async function () {
 		button.onclick = async () => {
 			document.title = page.toUpperCase() + (formula ? '公式表' : '記憶表');
 			if (page == 'oll') {
-				delete geturl['page'];
+				delete geturl.page;
 				await oll.initial();
 				await oll.icon();
 				oll.build(formula);
 			} else {
-				geturl['page'] = 'pll';
+				geturl.page = 'pll';
 				await pll.initial();
 				await pll.icon();
 				pll.build(formula);
 			}
 
 			if (formula == 0) {
-				delete geturl['formula'];
+				delete geturl.formula;
 			} else {
-				geturl['formula'] = '1';
+				geturl.formula = '1';
 			}
 			showtable(page, formula);
 			array2url(geturl);
@@ -46,11 +46,8 @@ window.onload = async function () {
 		}
 		let a = document.createElement('a');
 		a.href = location.href.split('?')[0] + obj2get(obj);
-		a.target = '_blank';
 		let event = new MouseEvent('click', {
-			'view': window,
-			'bubbles': false,
-			'cancelable': true
+			'button': 1
 		});
 		button.onmousedown = async (e) => {
 			if (e.button == 1) {
@@ -77,17 +74,17 @@ window.onload = async function () {
 	loadpage.append(createtr());
 
 	async function initial() {
-		if (typeof geturl['fbclid'] != 'undefined') {
-			delete geturl['fbclid'];
+		if (typeof geturl.fbclid != 'undefined') {
+			delete geturl.fbclid;
 			array2url(geturl);
 		}
 		let page = 'oll';
-		if (typeof geturl['page'] != 'undefined') {
-			if (geturl['page'].toLowerCase() == 'pll') {
+		if (typeof geturl.page != 'undefined') {
+			if (geturl.page.toLowerCase() == 'pll') {
 				page = 'pll';
 			}
 		}
-		let formula = geturl['formula'] == '1' ? 1 : 0;
+		let formula = geturl.formula == '1' ? 1 : 0;
 		document.title = page.toUpperCase() + (formula ? '公式表' : '記憶表');
 		if (page == 'oll') {
 			await oll.initial();
