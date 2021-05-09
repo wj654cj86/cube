@@ -31,8 +31,25 @@ td {
 	font-size : 16px;
 }
 
+.warn,
+.group,
+.formula,
+.description {
+	width         : 600px;
+	height        : 35px;
+	padding-left  : 20px;
+	padding-right : 20px;
+	padding-top   : 1px;
+	padding-bottom: 1px;
+}
+
+.warn {
+	background-color: #dbedff;
+}
+
 .group {
 	background-color: #ffdbdb;
+	width           : 100px;
 }
 
 .name {
@@ -57,24 +74,15 @@ td {
 
 .alg {
 	background-color: #ffdbff;
-	height : 70px;
-	padding: 0px;
+	line-height     : 0px;
+	height          : 70px;
+	padding         : 0px;
 }
 
 .alg iframe {
 	width : 150px;
 	height: 150px;
-}
-
-.group,
-.formula,
-.description {
-	width         : 600px;
-	height        : 35px;
-	padding-left  : 20px;
-	padding-right : 20px;
-	padding-top   : 1px;
-	padding-bottom: 1px;
+	border: none;
 }
 
 #refpiece {

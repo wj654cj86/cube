@@ -80,104 +80,96 @@ var pll = (() => {
 			if (typeof tagreg[1] != 'undefined') {
 				return;
 			}
-			let arr = [];
-			let main = document.createElement('tbody');
-			tagreg[1] = main;
+			let tbody = document.createElement('tbody');
+			tagreg[1] = tbody;
+			let tr = document.createElement('tr');
+			let td = document.createElement('td');
+			td.className = 'warn';
+			td.colSpan = '4';
+			td.innerHTML = '目前只有Firefox可以同時顯示所有動畫，其他瀏覽器顯示多個動畫可能會當機。';
+			tr.append(td);
+			tbody.append(tr);
 			for (let i = 0; i < height; i++) {
-				arr[i] = [];
 				let tr = document.createElement('tr');
 				let td = document.createElement('td');
 				td.className = 'group';
 				td.colSpan = '4';
-				arr[i][-1] = td;
+				td.innerHTML = data[i].name;
 				tr.append(td);
-				main.append(tr);
-				for (let j = 0; j < data[i].table.length; j++) {
-					let tr = document.createElement('tr');
-					let tr2 = document.createElement('tr');
-					let td = document.createElement('td');
-					let td2 = document.createElement('td');
-					let td3 = document.createElement('td');
-					let td4 = document.createElement('td');
-					let td5 = document.createElement('td');
-					td.className = 'name';
-					td.rowSpan = '2';
-					td2.className = 'img';
-					td2.rowSpan = '2';
-					td3.className = 'formula';
-					td4.className = 'description';
-					td5.className = 'alg';
-					td5.rowSpan = '2';
-					arr[i][j] = [td, td2, td3, td4, td5];
-					tr.append(td);
-					tr.append(td2);
-					tr.append(td5);
-					tr.append(td3);
-					tr2.append(td4);
-					main.append(tr);
-					main.append(tr2);
-				}
-			}
-			for (let i = 0; i < height; i++) {
-				arr[i][-1].innerHTML = data[i].name;
+				tbody.append(tr);
 				for (let j = 0; j < data[i].table.length; j++) {
 					let table = data[i].table[j];
 
-					let span1 = document.createElement('span');
-					span1.innerHTML = table.id + '-perm';
+					let tr = document.createElement('tr');
+					let tr2 = document.createElement('tr');
+					tbody.append(tr);
+					tbody.append(tr2);
+
+					let td = document.createElement('td');
+					td.className = 'name';
+					td.rowSpan = '2';
+					td.innerHTML = table.id + '-perm';
+
+					let td2 = document.createElement('td');
+					td2.className = 'img';
+					td2.rowSpan = '2';
 					let svg = copyxml(style(i, j)).getElementsByTagName('svg')[0];
+					td2.append(svg);
+
+					let td3 = document.createElement('td');
+					td3.className = 'formula';
 					let a = document.createElement('a');
 					a.href = `/alg/?type=alg${table.setup == "" ? '' : '&setup=' + table.setup.replace(/'/g, '-').replace(/ /g, '_')}&alg=${table.formula.replace(/'/g, '-').replace(/ /g, '_')}`
 					a.innerHTML = table.formula;
 					a.target = '_blank';
-					let span3 = document.createElement('span');
-					span3.innerHTML = table.description;
+					td3.append(a);
+
+					let td4 = document.createElement('td');
+					td4.className = 'description';
+					td4.innerHTML = table.description;
+
+					let td5 = document.createElement('td');
+					td5.className = 'alg';
+					td5.rowSpan = '2';
 					let button = document.createElement('button');
 					button.innerHTML = '顯示動畫';
 					button.onclick = () => {
 						let iframe = document.createElement('iframe');
 						iframe.src = `/alg/?type=alg&view=fullscreen&cycleView=disabled${table.setup == "" ? '' : '&setup=' + table.setup.replace(/'/g, '-').replace(/ /g, '_')}&alg=${table.formula.replace(/'/g, '-').replace(/ /g, '_')}`
-						iframe.frameBorder = 0;
-						arr[i][j][4].append(iframe);
+						td5.append(iframe);
 						let div = document.createElement('div');
 						div.append(button);
 					};
-					arr[i][j][0].append(span1);
-					arr[i][j][1].append(svg);
-					arr[i][j][2].append(a);
-					arr[i][j][3].append(span3);
-					arr[i][j][4].append(button);
+					td5.append(button);
+
+					tr.append(td);
+					tr.append(td2);
+					tr.append(td5);
+					tr.append(td3);
+					tr2.append(td4);
 				}
 			}
 		} else {
 			if (typeof tagreg[0] != 'undefined') {
 				return;
 			}
-			let arr = [];
-			let main = document.createElement('tbody');
-			tagreg[0] = main;
+			let tbody = document.createElement('tbody');
+			tagreg[0] = tbody;
 			for (let i = 0; i < height; i++) {
 				let tr = document.createElement('tr');
-				arr[i] = [];
+				tbody.append(tr);
 				let td = document.createElement('td');
-				td.style.width = '200px';
 				td.className = 'group';
-				arr[i][-1] = td;
+				td.innerHTML = data[i].name;
 				tr.append(td);
-				for (let j = 0; j < width; j++) {
+				for (let j = 0; j < data[i].table.length; j++) {
+					let table = data[i].table[j];
+
 					let td = document.createElement('td');
 					td.style.width = '200px';
 					td.className = 'img';
-					arr[i][j] = td;
 					tr.append(td);
-				}
-				main.append(tr);
-			}
-			for (let i = 0; i < height; i++) {
-				arr[i][-1].innerHTML = data[i].name;
-				arr[i][-1].style.width = '80px';
-				for (let j = 0; j < data[i].table.length; j++) {
-					let table = data[i].table[j];
+
 					let span1 = document.createElement('span');
 					span1.innerHTML = table.id + '-perm';
 					let br1 = document.createElement('br');
@@ -185,11 +177,18 @@ var pll = (() => {
 					let br2 = document.createElement('br');
 					let span2 = document.createElement('span');
 					span2.innerHTML = table.explanation;
-					arr[i][j].append(span1);
-					arr[i][j].append(br1);
-					arr[i][j].append(svg);
-					arr[i][j].append(br2);
-					arr[i][j].append(span2);
+
+					td.append(span1);
+					td.append(br1);
+					td.append(svg);
+					td.append(br2);
+					td.append(span2);
+				}
+				for (let j = data[i].table.length; j < width; j++) {
+					let td = document.createElement('td');
+					td.style.width = '200px';
+					td.className = 'img';
+					tr.append(td);
 				}
 			}
 		}
