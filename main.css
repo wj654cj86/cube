@@ -85,12 +85,6 @@ td {
 	border: none;
 }
 
-#refpiece {
-	position: absolute;
-	opacity : 0;
-	z-index : -10;
-}
-
 #loadpage {
 	border: 0px solid #333;
 }

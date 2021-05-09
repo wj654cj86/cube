@@ -54,25 +54,13 @@ var pll = (() => {
 		}
 	];
 	let text = '';
-	let defs = '';
-	let reg = {};
-	let iconurl = '';
 	let tagreg = [];
-	async function icon() {
-		if (iconurl == '') {
-			let temp = copyxml(style(5, 0)).getElementsByTagName('svg')[0];
-			let svg = text2xml(defs);
-			temp.append(svg.getElementsByTagName('defs')[0]);
-			iconurl = await promise(svgtopngurl, temp);
-		}
-		iconlink.setAttribute('href', iconurl);
+	function icon() {
+		iconlink.href = style(5, 0);
 	}
 	async function initial() {
 		if (text == '') {
 			text = await promise(openfile, 'pll/style.svg');
-			defs = await promise(openfile, 'pll/defs.svg');
-			let svg = text2xml(defs);
-			refpiece.append(svg.getElementsByTagName('defs')[0]);
 		}
 	}
 	function build(formula) {
@@ -113,8 +101,9 @@ var pll = (() => {
 					let td2 = document.createElement('td');
 					td2.className = 'img';
 					td2.rowSpan = '2';
-					let svg = copyxml(style(i, j)).getElementsByTagName('svg')[0];
-					td2.append(svg);
+					let img = new Image();
+					img.src = style(i, j);
+					td2.append(img);
 
 					let td3 = document.createElement('td');
 					td3.className = 'formula';
@@ -173,14 +162,15 @@ var pll = (() => {
 					let span1 = document.createElement('span');
 					span1.innerHTML = table.id + '-perm';
 					let br1 = document.createElement('br');
-					let svg = copyxml(style(i, j)).getElementsByTagName('svg')[0];
+					let img = new Image();
+					img.src = style(i, j);
 					let br2 = document.createElement('br');
 					let span2 = document.createElement('span');
 					span2.innerHTML = table.explanation;
 
 					td.append(span1);
 					td.append(br1);
-					td.append(svg);
+					td.append(img);
 					td.append(br2);
 					td.append(span2);
 				}
@@ -195,9 +185,8 @@ var pll = (() => {
 	}
 	function style(i, j) {
 		let table = data[i].table[j];
-		let id = table.id;
-		if (id in reg) {
-			return reg[id];
+		if (typeof table.reg != 'undefined') {
+			return table.reg;
 		}
 		let svg = text2xml(text).getElementsByTagName('svg')[0];
 		let script = table.script;
@@ -237,8 +226,8 @@ var pll = (() => {
 			path.setAttribute('transform', t);
 			svg.append(path);
 		}
-		reg[id] = svg;
-		return reg[id];
+		table.reg = svgtourl(svg);
+		return table.reg;
 	}
 	function id2seat(id) {
 		let tmp = id - 1;

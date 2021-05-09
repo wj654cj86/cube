@@ -174,30 +174,38 @@ function q(script) {
 window.onload = async function () {
 	refpiece.setAttribute('xmlns', "http://www.w3.org/2000/svg");
 	refpiece.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
-	await oll.initial('style.svg', 'defs.svg');
-	await oll.icon();
+	await oll.initial('style.svg');
+	oll.icon();
 	svgdone.onclick = function () {
 		olldiv.innerHTML = '';
 		oll.data[9].table[0].script = svgscript.value;
-		delete oll.reg[58];
-		olldiv.append(oll.style(9, 0));
+		delete oll.data[9].table[0].reg;
+		let img = new Image();
+		img.src = oll.style(9, 0);
+		olldiv.append(img);
 	};
 	svgp.onclick = function () {
 		olldiv.innerHTML = '';
 		oll.data[9].table[0].script = svgscript.value = p(svgscript.value);
-		delete oll.reg[58];
-		olldiv.append(oll.style(9, 0));
+		delete oll.data[9].table[0].reg;
+		let img = new Image();
+		img.src = oll.style(9, 0);
+		olldiv.append(img);
 	};
 	svgn.onclick = function () {
 		olldiv.innerHTML = '';
 		oll.data[9].table[0].script = svgscript.value = p(p(p(svgscript.value)));
-		delete oll.reg[58];
-		olldiv.append(oll.style(9, 0));
+		delete oll.data[9].table[0].reg;
+		let img = new Image();
+		img.src = oll.style(9, 0);
+		olldiv.append(img);
 	};
 	svgq.onclick = function () {
 		olldiv.innerHTML = '';
 		oll.data[9].table[0].script = svgscript.value = q(svgscript.value);
-		delete oll.reg[58];
-		olldiv.append(oll.style(9, 0));
+		delete oll.data[9].table[0].reg;
+		let img = new Image();
+		img.src = oll.style(9, 0);
+		olldiv.append(img);
 	};
 };

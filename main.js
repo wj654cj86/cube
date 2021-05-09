@@ -1,9 +1,6 @@
 var geturl = url2array();
 var notshow = document.createElement('table');
 window.onload = async function () {
-	refpiece.setAttribute('xmlns', "http://www.w3.org/2000/svg");
-	refpiece.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
-
 	function showtable(page, formula) {
 		notshow.append(oll.tagreg[0]);
 		notshow.append(oll.tagreg[1]);
@@ -19,12 +16,12 @@ window.onload = async function () {
 			if (page == 'oll') {
 				delete geturl.page;
 				await oll.initial();
-				await oll.icon();
+				oll.icon();
 				oll.build(formula);
 			} else {
 				geturl.page = 'pll';
 				await pll.initial();
-				await pll.icon();
+				pll.icon();
 				pll.build(formula);
 			}
 
@@ -88,11 +85,11 @@ window.onload = async function () {
 		document.title = page.toUpperCase() + (formula ? '公式表' : '記憶表');
 		if (page == 'oll') {
 			await oll.initial();
-			await oll.icon();
+			oll.icon();
 			oll.build(formula);
 		} else {
 			await pll.initial();
-			await pll.icon();
+			pll.icon();
 			pll.build(formula);
 		}
 		showtable(page, formula);
