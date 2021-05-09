@@ -172,8 +172,6 @@ function q(script) {
 }
 
 window.onload = async function () {
-	refpiece.setAttribute('xmlns', "http://www.w3.org/2000/svg");
-	refpiece.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
 	await oll.initial('style.svg');
 	oll.icon();
 	svgdone.onclick = function () {
