@@ -6,17 +6,64 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title></title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 	<script type="text/javascript" src="oll/cube.js"></script>
 	<script type="text/javascript" src="pll/cube.js"></script>
 	<script type="text/javascript" src="mylibrary.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 	<link rel="stylesheet" type="text/css" href="main.css">
-	<link rel="icon" id="iconlink">
+	<link rel="icon" id="iconlink" v-bind:href="url">
 </head>
 
 <body>
-	<table id="loadpage"></table>
-	<table id="show"></table>
+	<table id="loadpage">
+		<tbody>
+			<tr>
+				<td v-for="i in 4">
+					<button v-on:click="changepage(i)">{{name(i)}}</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table id="show" v-bind:count="count">
+		<tbody v-if="geturl.formula != 1">
+			<tr v-for="i in rttb().size.height">
+				<td class="group">{{rttb(i-1).name}}</td>
+				<td class="img" v-bind:style="'width:'+tdwidth()+';'" v-for="item in rttb(i-1).table">
+					<span>{{algname(item.id)}}</span>
+					<br>
+					<img v-bind:src="item.src" />
+					<br>
+					<span>{{item.explanation}}</span>
+				</td>
+				<td class="img" v-for="j in (rttb().size.width - rttb(i-1).table.length)"></td>
+			</tr>
+		</tbody>
+		<tbody v-else>
+			<tr>
+				<td class="warn" colspan="4">目前只有Firefox可以同時顯示所有動畫，其他瀏覽器顯示多個動畫可能會當機。</td>
+			</tr>
+			<template v-for="i in rttb().size.height">
+				<tr>
+					<td class="group" colspan="4">{{rttb(i-1).name}}</td>
+				</tr>
+				<template v-for="item in rttb(i-1).table">
+					<tr>
+						<td class="name" rowspan="2">{{algname(item.id)}}</td>
+						<td class="img" rowspan="2"><img v-bind:src="item.src" /></td>
+						<td class="alg" rowspan="2">
+							<button v-if="item.show === false" v-on:click="item.show = true">顯示動畫</button>
+							<iframe v-else v-bind:src="'/alg/?type=alg&stage='+page().toUpperCase()+(item.setup&&item.setup!=''?'&setup='+alg(item.setup):'')+'&view=fullscreen&cycleView=disabled&alg='+alg(item.formula)"></iframe>
+						</td>
+						<td class="formula"><a v-bind:href="'/alg/?type=alg&stage='+page().toUpperCase()+(item.setup&&item.setup!=''?'&setup='+alg(item.setup):'')+'&alg='+alg(item.formula)" target='_blank'>{{item.formula}}</a></td>
+					</tr>
+					<tr>
+						<td class="description">{{item.description}}</td>
+					</tr>
+				</template>
+			</template>
+		</tbody>
+	</table>
 </body>
 
 </html>

@@ -1,104 +1,75 @@
 var geturl = url2array();
 var notshow = document.createElement('table');
 window.onload = async function () {
-	function showtable(page, formula) {
-		notshow.append(oll.tagreg[0]);
-		notshow.append(oll.tagreg[1]);
-		notshow.append(pll.tagreg[0]);
-		notshow.append(pll.tagreg[1]);
-		show.append((page == 'oll' ? oll : pll).tagreg[formula]);
-	}
-	function createbutton(page, formula) {
-		let button = document.createElement('button');
-		button.innerHTML = page.toUpperCase() + (formula ? '公式表' : '記憶表');
-		button.onclick = async () => {
-			document.title = page.toUpperCase() + (formula ? '公式表' : '記憶表');
-			if (page == 'oll') {
-				delete geturl.page;
-				await oll.initial();
-				oll.icon();
-				oll.build(formula);
-			} else {
-				geturl.page = 'pll';
-				await pll.initial();
-				pll.icon();
-				pll.build(formula);
-			}
-
-			if (formula == 0) {
-				delete geturl.formula;
-			} else {
-				geturl.formula = '1';
-			}
-			showtable(page, formula);
-			array2url(geturl);
-		};
-
-		let obj = {};
-		if (page != 'oll') {
-			obj.page = 'pll';
+	await oll.initial();
+	await pll.initial();
+	let iconvue = new Vue({
+		el: '#iconlink',
+		data: {
+			url: (() => {
+				if (geturl.page != 'pll') {
+					return oll.icon;
+				} else {
+					return pll.icon;
+				}
+			})()
 		}
-		if (formula != 0) {
-			obj.formula = 1;
-		}
-		let a = document.createElement('a');
-		a.href = location.href.split('?')[0] + obj2get(obj);
-		let event = new MouseEvent('click', {
-			'button': 1
-		});
-		button.onmousedown = async (e) => {
-			if (e.button == 1) {
-				a.dispatchEvent(event);
-				return;
-			}
-		};
-		return button;
-	}
-	function createtd(page, formula) {
-		let td = document.createElement('td');
-		td.append(createbutton(page, formula));
-		return td;
-	}
-	function createtr() {
-		let tr = document.createElement('tr');
-		tr.append(createtd('oll', 0));
-		tr.append(createtd('oll', 1));
-		tr.append(createtd('pll', 0));
-		tr.append(createtd('pll', 1));
-		return tr;
-	}
-
-	loadpage.append(createtr());
-
-	async function initial() {
-		if (typeof geturl.fbclid != 'undefined') {
-			delete geturl.fbclid;
-			array2url(geturl);
-		}
-		let page = 'oll';
-		if (typeof geturl.page != 'undefined') {
-			if (geturl.page.toLowerCase() == 'pll') {
-				page = 'pll';
+	});
+	let showvue = new Vue({
+		el: '#show',
+		data: {
+			table: { oll: oll.list, pll: pll.list },
+			geturl: geturl,
+			count: 0
+		}, methods: {
+			page() {
+				return this.geturl.page == 'pll' ? 'pll' : 'oll';
+			},
+			rttb(i, j) {
+				if (typeof i == 'undefined') {
+					return this.table[this.page()];
+				} else if (typeof j == 'undefined') {
+					return this.table[this.page()].data[i];
+				} else {
+					return this.table[this.page()].data[i].table[j];
+				}
+			},
+			tdwidth() {
+				return typeof this.rttb().size.tdwidth == 'undefined' ? '100px' : (this.rttb().size.tdwidth + 'px');
+			},
+			algname(id) {
+				return this.page() == 'oll' ? ('OLL-' + id) : (id + '-perm');
+			},
+			alg(formula) {
+				return formula.replace(/'/g, '-').replace(/ /g, '_')
 			}
 		}
-		let formula = geturl.formula == '1' ? 1 : 0;
-		document.title = page.toUpperCase() + (formula ? '公式表' : '記憶表');
-		if (page == 'oll') {
-			await oll.initial();
-			oll.icon();
-			oll.build(formula);
-		} else {
-			await pll.initial();
-			pll.icon();
-			pll.build(formula);
+	});
+
+	let loadpagevue = new Vue({
+		el: '#loadpage',
+		methods: {
+			name: (i) => {
+				return (Math.floor((i - 1) / 2) == 0 ? 'OLL' : 'PLL') + ((i - 1) % 2 == 0 ? '記憶表' : '公式表');
+			},
+			changepage: (i) => {
+				let page = (Math.floor((i - 1) / 2) == 0 ? 'oll' : 'pll');
+				let formula = (i - 1) % 2;
+				if (page == 'oll') {
+					delete geturl.page;
+					iconvue.url = oll.icon;
+				} else {
+					geturl.page = 'pll';
+					iconvue.url = pll.icon;
+				}
+				if (formula == 0) {
+					delete geturl.formula;
+				} else {
+					geturl.formula = '1';
+				}
+				showvue.count++;
+				array2url(geturl);
+			}
 		}
-		showtable(page, formula);
-	}
-
-	await initial();
-
-	window.addEventListener("popstate", async () => {
-		geturl = url2array();
-		await initial();
 	});
 };

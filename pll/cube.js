@@ -1,5 +1,6 @@
 var pll = (() => {
 	let width = 4, height = 6;
+	let tdwidth = 200;
 	let data = [
 		{
 			name: "基本",
@@ -54,139 +55,26 @@ var pll = (() => {
 		}
 	];
 	let text = '';
-	let tagreg = [];
-	function icon() {
-		iconlink.href = style(5, 0);
-	}
-	async function initial() {
+	let icon = { i: 5, j: 0 };
+	async function initial(file) {
 		if (text == '') {
-			text = await promise(openfile, 'pll/style.svg');
+			text = await promise(openfile, file || 'pll/style.svg');
+			build();
 		}
 	}
-	function build(formula) {
-		if (formula == 1) {
-			if (typeof tagreg[1] != 'undefined') {
-				return;
-			}
-			let tbody = document.createElement('tbody');
-			tagreg[1] = tbody;
-			let tr = document.createElement('tr');
-			let td = document.createElement('td');
-			td.className = 'warn';
-			td.colSpan = '4';
-			td.innerHTML = '目前只有Firefox可以同時顯示所有動畫，其他瀏覽器顯示多個動畫可能會當機。';
-			tr.append(td);
-			tbody.append(tr);
-			for (let i = 0; i < height; i++) {
-				let tr = document.createElement('tr');
-				let td = document.createElement('td');
-				td.className = 'group';
-				td.colSpan = '4';
-				td.innerHTML = data[i].name;
-				tr.append(td);
-				tbody.append(tr);
-				for (let j = 0; j < data[i].table.length; j++) {
-					let table = data[i].table[j];
-
-					let tr = document.createElement('tr');
-					let tr2 = document.createElement('tr');
-					tbody.append(tr);
-					tbody.append(tr2);
-
-					let td = document.createElement('td');
-					td.className = 'name';
-					td.rowSpan = '2';
-					td.innerHTML = table.id + '-perm';
-
-					let td2 = document.createElement('td');
-					td2.className = 'img';
-					td2.rowSpan = '2';
-					let img = new Image();
-					img.src = style(i, j);
-					td2.append(img);
-
-					let td3 = document.createElement('td');
-					td3.className = 'formula';
-					let a = document.createElement('a');
-					a.href = `/alg/?type=alg${table.setup == "" ? '' : '&setup=' + table.setup.replace(/'/g, '-').replace(/ /g, '_')}&alg=${table.formula.replace(/'/g, '-').replace(/ /g, '_')}`
-					a.innerHTML = table.formula;
-					a.target = '_blank';
-					td3.append(a);
-
-					let td4 = document.createElement('td');
-					td4.className = 'description';
-					td4.innerHTML = table.description;
-
-					let td5 = document.createElement('td');
-					td5.className = 'alg';
-					td5.rowSpan = '2';
-					let button = document.createElement('button');
-					button.innerHTML = '顯示動畫';
-					button.onclick = () => {
-						let iframe = document.createElement('iframe');
-						iframe.src = `/alg/?type=alg&view=fullscreen&cycleView=disabled${table.setup == "" ? '' : '&setup=' + table.setup.replace(/'/g, '-').replace(/ /g, '_')}&alg=${table.formula.replace(/'/g, '-').replace(/ /g, '_')}`
-						td5.append(iframe);
-						let div = document.createElement('div');
-						div.append(button);
-					};
-					td5.append(button);
-
-					tr.append(td);
-					tr.append(td2);
-					tr.append(td5);
-					tr.append(td3);
-					tr2.append(td4);
-				}
-			}
-		} else {
-			if (typeof tagreg[0] != 'undefined') {
-				return;
-			}
-			let tbody = document.createElement('tbody');
-			tagreg[0] = tbody;
-			for (let i = 0; i < height; i++) {
-				let tr = document.createElement('tr');
-				tbody.append(tr);
-				let td = document.createElement('td');
-				td.className = 'group';
-				td.innerHTML = data[i].name;
-				tr.append(td);
-				for (let j = 0; j < data[i].table.length; j++) {
-					let table = data[i].table[j];
-
-					let td = document.createElement('td');
-					td.style.width = '200px';
-					td.className = 'img';
-					tr.append(td);
-
-					let span1 = document.createElement('span');
-					span1.innerHTML = table.id + '-perm';
-					let br1 = document.createElement('br');
-					let img = new Image();
-					img.src = style(i, j);
-					let br2 = document.createElement('br');
-					let span2 = document.createElement('span');
-					span2.innerHTML = table.explanation;
-
-					td.append(span1);
-					td.append(br1);
-					td.append(img);
-					td.append(br2);
-					td.append(span2);
-				}
-				for (let j = data[i].table.length; j < width; j++) {
-					let td = document.createElement('td');
-					td.style.width = '200px';
-					td.className = 'img';
-					tr.append(td);
-				}
+	function build() {
+		for (let i = 0; i < height; i++) {
+			for (let j = 0; j < data[i].table.length; j++) {
+				style(i, j);
+				let table = data[i].table[j];
+				table.show = false;
 			}
 		}
 	}
 	function style(i, j) {
 		let table = data[i].table[j];
-		if (typeof table.reg != 'undefined') {
-			return table.reg;
+		if (typeof table.src != 'undefined') {
+			return table.src;
 		}
 		let svg = text2xml(text).getElementsByTagName('svg')[0];
 		let script = table.script;
@@ -226,18 +114,20 @@ var pll = (() => {
 			path.setAttribute('transform', t);
 			svg.append(path);
 		}
-		table.reg = svgtourl(svg);
-		return table.reg;
+		table.src = svgtourl(svg);
+		return table.src;
 	}
 	function id2seat(id) {
 		let tmp = id - 1;
 		return { x: tmp % 3 - 1, y: Math.floor(tmp / 3) - 1 };
 	}
 	return {
-		get tagreg() {
-			return tagreg;
+		get list() {
+			return { size: { width: width, height: height, tdwidth: tdwidth }, data: data };
 		},
-		icon: icon,
+		get icon() {
+			return data[icon.i].table[icon.j].src;
+		},
 		initial: initial,
 		build: build,
 		style: style

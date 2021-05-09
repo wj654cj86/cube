@@ -172,40 +172,66 @@ function q(script) {
 }
 
 window.onload = async function () {
-	refpiece.setAttribute('xmlns', "http://www.w3.org/2000/svg");
-	refpiece.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
 	await oll.initial('style.svg');
-	oll.icon();
+	let iconvue = new Vue({
+		el: '#iconlink',
+		data: {
+			url: oll.icon
+		}
+	});
+	let showvue = new Vue({
+		el: '#show',
+		data: {
+			table: { oll: oll.list },
+			geturl: {},
+			count: 0
+		}, methods: {
+			page() {
+				return this.geturl.page == 'pll' ? 'pll' : 'oll';
+			},
+			rttb(i, j) {
+				if (typeof i == 'undefined') {
+					return this.table[this.page()];
+				} else if (typeof j == 'undefined') {
+					return this.table[this.page()].data[i];
+				} else {
+					return this.table[this.page()].data[i].table[j];
+				}
+			},
+			tdwidth() {
+				return typeof this.rttb().size.tdwidth == 'undefined' ? '100px' : (this.rttb().size.tdwidth + 'px');
+			},
+			algname(id) {
+				return this.page() == 'oll' ? ('OLL-' + id) : (id + '-perm');
+			},
+			alg(formula) {
+				return formula.replace(/'/g, '-').replace(/ /g, '_')
+			}
+		}
+	});
+
 	svgdone.onclick = function () {
-		olldiv.innerHTML = '';
-		oll.data[9].table[0].script = svgscript.value;
-		delete oll.data[9].table[0].reg;
-		let img = new Image();
-		img.src = oll.style(9, 0);
-		olldiv.append(img);
+		oll.list.data[9].table[0].script = svgscript.value;
+		delete oll.list.data[9].table[0].src;
+		oll.style(9, 0);
+		showvue.count++;
 	};
 	svgp.onclick = function () {
-		olldiv.innerHTML = '';
-		oll.data[9].table[0].script = svgscript.value = p(svgscript.value);
-		delete oll.data[9].table[0].reg;
-		let img = new Image();
-		img.src = oll.style(9, 0);
-		olldiv.append(img);
+		oll.list.data[9].table[0].script = svgscript.value = p(svgscript.value);
+		delete oll.list.data[9].table[0].src;
+		oll.style(9, 0);
+		showvue.count++;
 	};
 	svgn.onclick = function () {
-		olldiv.innerHTML = '';
-		oll.data[9].table[0].script = svgscript.value = p(p(p(svgscript.value)));
-		delete oll.data[9].table[0].reg;
-		let img = new Image();
-		img.src = oll.style(9, 0);
-		olldiv.append(img);
+		oll.list.data[9].table[0].script = svgscript.value = p(p(p(svgscript.value)));
+		delete oll.list.data[9].table[0].src;
+		oll.style(9, 0);
+		showvue.count++;
 	};
 	svgq.onclick = function () {
-		olldiv.innerHTML = '';
-		oll.data[9].table[0].script = svgscript.value = q(svgscript.value);
-		delete oll.data[9].table[0].reg;
-		let img = new Image();
-		img.src = oll.style(9, 0);
-		olldiv.append(img);
+		oll.list.data[9].table[0].script = svgscript.value = q(svgscript.value);
+		delete oll.list.data[9].table[0].src;
+		oll.style(9, 0);
+		showvue.count++;
 	};
 };
