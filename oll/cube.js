@@ -27,7 +27,7 @@ var oll = (() => {
 		{
 			name: "轉邊不轉角",
 			table: [
-				{ id: 20, script: "ubulurufu", formula: "S R U R' U' R' U' R' U R S'", explanation: "　", description: "　" },
+				{ id: 20, script: "ubulurufu", formula: "r U R' U' M2 U R U' R' U' M'", explanation: "　", description: "　" },
 				{ id: 28, script: "uuuuurufu", formula: "r U R' U' M U R U' R'", explanation: "OLL57反", description: "OLL-57反向" },
 				{ id: 57, script: "ubuuuuufu", formula: "R U R' U' M' U R U' r'", explanation: "　", description: "　" }
 			]

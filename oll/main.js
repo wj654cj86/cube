@@ -171,7 +171,7 @@ function q(script) {
 	return data.join('');
 }
 
-window.onload = async function () {
+window.onload = async () => {
 	await oll.initial('style.svg');
 	oll.icon();
 	svgdone.onclick = function () {

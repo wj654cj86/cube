@@ -84,13 +84,27 @@ function sleep(ms) {
 }
 
 function openfile(url, callback) {
-	if (typeof callback == "undefined") {
-		callback = function (str) { };
-	}
 	let oReq = new XMLHttpRequest();
 	oReq.addEventListener("load", function () {
-		if (oReq.status != 404) {
+		if (this.status != 404) {
 			callback(this.responseText);
+		} else {
+			callback('{}');
+		}
+	});
+	oReq.addEventListener("error", function () {
+		callback('{}');
+	});
+	oReq.open("GET", url);
+	oReq.send();
+}
+
+function openfilebinary(url, callback) {
+	let oReq = new XMLHttpRequest();
+	oReq.responseType = "arraybuffer";
+	oReq.addEventListener("load", function () {
+		if (this.status != 404) {
+			callback(new Uint8Array(this.response));
 		} else {
 			callback('{}');
 		}
@@ -118,10 +132,10 @@ function copyxml(xml) {
 
 function getimgsize(imgsrc, callback) {
 	let a = new Image();
-	a.onload = function () {
+	a.onload = () => {
 		callback(a.naturalWidth, a.naturalHeight);
 	};
-	a.onerror = function () {
+	a.onerror = () => {
 		callback(-1, -1);
 	};
 	a.src = imgsrc;
@@ -129,7 +143,7 @@ function getimgsize(imgsrc, callback) {
 
 function loadimg(imgsrc, callback) {
 	let img = new Image();
-	img.onload = function () {
+	img.onload = () => {
 		callback(img);
 	};
 	img.src = imgsrc;
@@ -140,7 +154,7 @@ function loadsound(src, callback) {
 	xhr.open('GET', src);
 	xhr.responseType = "blob";
 	xhr.send();
-	xhr.onreadystatechange = function () {
+	xhr.onreadystatechange = () => {
 		if (xhr.readyState === 4) {
 			let blob = this.response;
 			callback(URL.createObjectURL(blob));
@@ -159,7 +173,7 @@ function svgtoimg(svg, callback) {
 	let img = new Image();
 	let blob = new Blob([svgstring], { type: 'image/svg+xml' });
 	let url = URL.createObjectURL(blob);
-	img.onload = function () {
+	img.onload = () => {
 		callback();
 	};
 	img.src = url;
@@ -167,13 +181,13 @@ function svgtoimg(svg, callback) {
 }
 
 function svgtopngurl(svg, callback) {
-	let img = svgtoimg(svg, function () {
+	let img = svgtoimg(svg, () => {
 		let c = document.createElement("canvas");
 		c.setAttribute('width', img.naturalWidth);
 		c.setAttribute('height', img.naturalHeight);
 		let ctx = c.getContext("2d");
 		ctx.drawImage(img, 0, 0);
-		c.toBlob(function (blob) {
+		c.toBlob((blob) => {
 			let url = URL.createObjectURL(blob);
 			callback(url);
 		});
@@ -182,7 +196,7 @@ function svgtopngurl(svg, callback) {
 
 function pngtobase64(imgsrc, callback) {
 	let img = new Image();
-	img.onload = function () {
+	img.onload = () => {
 		let c = document.createElement("canvas");
 		c.setAttribute('width', img.naturalWidth);
 		c.setAttribute('height', img.naturalHeight);
@@ -198,20 +212,6 @@ function getclickpoint(event, element) {
 		x: event.clientX - element.offsetLeft + document.documentElement.scrollLeft + document.body.scrollLeft,
 		y: event.clientY - element.offsetTop + document.documentElement.scrollTop + document.body.scrollTop
 	};
-}
-
-function getCursorPosition(event) {
-	let posx = 0;
-	let posy = 0;
-	if (!event) event = window.event;
-	if (event.pageX || event.pageY) {
-		posx = event.pageX - document.documentElement.scrollLeft - document.body.scrollLeft;
-		posy = event.pageY - document.documentElement.scrollTop - document.body.scrollTop;
-	} else if (event.clientX || event.clientY) {
-		posx = event.clientX;
-		posy = event.clientY;
-	}
-	return { x: posx, y: posy };
 }
 
 function startDownload(url, name) {
@@ -271,36 +271,27 @@ function hexToRgb(h) {
 	return [r, g, b];
 }
 
-Node.prototype.getElementsByAttributeValue = function (attribute, value) {
-	var dom = this.all || this.getElementsByTagName("*");
-	var match = new Array();
-	for (var i in dom) {
-		if ((typeof dom[i]) === "object") {
-			if (dom[i].getAttribute(attribute) == value) {
-				match.push(dom[i]);
-			}
-		}
-	}
-	return match;
-};
-
-Node.prototype.getElementByIdSvg = function (value) {
-	return this.getElementsByAttributeValue('id', value)[0];
-};
-
 function removeChild(node) {
 	if (node.parentNode) {
 		node.parentNode.removeChild(node);
 	}
 }
 
-function sentpost(url, obj) {
+function sentpost(url, obj, callback) {
 	obj = obj || {};
-
+	callback = callback || (() => { });
 	let oReq = new XMLHttpRequest();
 	oReq.open("POST", url, true);
 	oReq.setRequestHeader('Content-Type', 'application/json');
-	oReq.onreadystatechange = function () {
-	};
+	oReq.addEventListener("load", function () {
+		if (this.status != 404) {
+			callback(this.responseText);
+		} else {
+			callback('{}');
+		}
+	});
+	oReq.addEventListener("error", function () {
+		callback('{}');
+	});
 	oReq.send(JSON.stringify(obj));
 }

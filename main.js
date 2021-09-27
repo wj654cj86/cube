@@ -1,6 +1,6 @@
 var geturl = url2array();
 var notshow = document.createElement('table');
-window.onload = async function () {
+window.onload = async () => {
 	function showtable(page, formula) {
 		notshow.append(oll.tagreg[0]);
 		notshow.append(oll.tagreg[1]);
