@@ -1,14 +1,14 @@
-function paddingLeft(str, lenght) {
+function paddingLeft(str, length) {
 	str += '';
-	if (str.length >= lenght)
+	if (str.length >= length)
 		return str;
 	else
-		return paddingLeft("0" + str, lenght);
+		return paddingLeft("0" + str, length);
 }
 
 function setCookie(cname, cvalue) {
-	var d;
-	var expires = '';
+	let d;
+	let expires = '';
 	d = new Date();
 	d.setTime(d.getTime() + (100 * 24 * 60 * 60 * 1000));
 	expires = "expires=" + d.toUTCString() + ";";
@@ -16,11 +16,11 @@ function setCookie(cname, cvalue) {
 }
 
 function getCookie(cname) {
-	var name = cname + "=";
-	var decodedCookie = decodeURIComponent(document.cookie);
-	var ca = decodedCookie.split(';');
-	for (var i = 0; i < ca.length; i++) {
-		var c = ca[i];
+	let name = cname + "=";
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for (let i = 0; i < ca.length; i++) {
+		let c = ca[i];
 		while (c.charAt(0) == ' ') {
 			c = c.substring(1);
 		}
@@ -32,12 +32,12 @@ function getCookie(cname) {
 }
 
 function url2array() {
-	var arr = [];
-	var strUrl = location.search;
+	let arr = [];
+	let strUrl = location.search;
 	if (strUrl.indexOf('?') != -1) {
-		var allData = strUrl.split("?")[1].split("&");
-		for (var i = 0; i < allData.length; i++) {
-			var data = allData[i].split("=");
+		let allData = strUrl.split("?")[1].split("&");
+		for (let i = 0; i < allData.length; i++) {
+			let data = allData[i].split("=");
 			arr[data[0]] = decodeURIComponent(data[1]);
 		}
 	}
@@ -45,12 +45,12 @@ function url2array() {
 }
 
 function array2url(arr) {
-	var allData = [];
-	for (var i in arr) {
+	let allData = [];
+	for (let i in arr) {
 		allData.push(i + '=' + encodeURIComponent(arr[i]));
 	}
-	var strUrl = allData.length != 0 ? ('?' + allData.join('&')) : '';
-	var url = location.href.split('?')[0];
+	let strUrl = allData.length != 0 ? ('?' + allData.join('&')) : '';
+	let url = location.href.split('?')[0];
 	window.history.pushState({}, 0, url + strUrl + location.hash);
 }
 
@@ -117,13 +117,19 @@ function openfilebinary(url, callback) {
 }
 
 function text2xml(text) {
-	let parser = new DOMParser();
-	return parser.parseFromString(text, "text/xml");
+	return (new DOMParser()).parseFromString(text, "text/xml");
 }
 
 function xml2text(xml) {
-	let xsl = new XMLSerializer();
-	return xsl.serializeToString(xml);
+	return (new XMLSerializer()).serializeToString(xml);
+}
+
+function nodetext2svgnode(text) {
+	return (new DOMParser()).parseFromString(
+		`<?xml version="1.0" encoding="UTF-8"?>
+			<svg xmlns="http://www.w3.org/2000/svg"
+				 xmlns:xlink="http://www.w3.org/1999/xlink">${text}
+			</svg>`, "image/svg+xml").querySelector('svg').childNodes[0];
 }
 
 function copyxml(xml) {
@@ -149,23 +155,21 @@ function loadimg(imgsrc, callback) {
 	img.src = imgsrc;
 }
 
-function loadsound(src, callback) {
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', src);
-	xhr.responseType = "blob";
-	xhr.send();
-	xhr.onreadystatechange = () => {
-		if (xhr.readyState === 4) {
-			let blob = this.response;
-			callback(URL.createObjectURL(blob));
+function loadsound(url, callback) {
+	let oReq = new XMLHttpRequest();
+	oReq.responseType = "blob";
+	oReq.addEventListener("load", function () {
+		if (this.status != 404) {
+			callback(URL.createObjectURL(this.response));
+		} else {
+			callback('{}');
 		}
-	}
-}
-
-function svgtourl(svg) {
-	let svgstring = xml2text(svg);
-	let blob = new Blob([svgstring], { type: 'image/svg+xml' });
-	return URL.createObjectURL(blob);
+	});
+	oReq.addEventListener("error", function () {
+		callback('{}');
+	});
+	oReq.open("GET", url);
+	oReq.send();
 }
 
 function svgtoimg(svg, callback) {
@@ -183,8 +187,8 @@ function svgtoimg(svg, callback) {
 function svgtopngurl(svg, callback) {
 	let img = svgtoimg(svg, () => {
 		let c = document.createElement("canvas");
-		c.setAttribute('width', img.naturalWidth);
-		c.setAttribute('height', img.naturalHeight);
+		c.width = img.naturalWidth;
+		c.height = img.naturalHeight;
 		let ctx = c.getContext("2d");
 		ctx.drawImage(img, 0, 0);
 		c.toBlob((blob) => {
@@ -198,8 +202,8 @@ function pngtobase64(imgsrc, callback) {
 	let img = new Image();
 	img.onload = () => {
 		let c = document.createElement("canvas");
-		c.setAttribute('width', img.naturalWidth);
-		c.setAttribute('height', img.naturalHeight);
+		c.width = img.naturalWidth;
+		c.height = img.naturalHeight;
 		let ctx = c.getContext("2d");
 		ctx.drawImage(img, 0, 0);
 		callback(c.toDataURL());
@@ -249,7 +253,7 @@ function arrsd(arr) {
 
 function componentToHex(c) {
 	c = Math.floor(c * 1);
-	var hex = c.toString(16);
+	let hex = c.toString(16);
 	return paddingLeft(hex, 2);
 }
 
