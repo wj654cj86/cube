@@ -172,6 +172,13 @@ function loadsound(url, callback) {
 	oReq.send();
 }
 
+function svgtourl(svg) {
+	let svgstring = xml2text(svg);
+	let blob = new Blob([svgstring], { type: 'image/svg+xml' });
+	return URL.createObjectURL(blob);
+}
+
+
 function svgtoimg(svg, callback) {
 	let svgstring = xml2text(svg);
 	let img = new Image();
