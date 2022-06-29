@@ -178,7 +178,6 @@ function svgtourl(svg) {
 	return URL.createObjectURL(blob);
 }
 
-
 function svgtoimg(svg, callback) {
 	let svgstring = xml2text(svg);
 	let img = new Image();
