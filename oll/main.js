@@ -1,3 +1,4 @@
+import oll from './cube.js';
 function p(script) {
 	script += 'uuuuuu';
 	let data = [];

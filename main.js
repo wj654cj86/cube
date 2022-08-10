@@ -1,5 +1,8 @@
-var geturl = url2array();
-var notshow = document.createElement('table');
+import oll from './oll/cube.js';
+import pll from './pll/cube.js';
+
+let geturl = url2obj();
+let notshow = document.createElement('table');
 window.onload = async () => {
 	function showtable(page, formula) {
 		notshow.append(oll.tagreg[0]);
@@ -31,7 +34,7 @@ window.onload = async () => {
 				geturl.formula = '1';
 			}
 			showtable(page, formula);
-			array2url(geturl);
+			obj2url(geturl);
 		};
 
 		let obj = {};
@@ -73,7 +76,7 @@ window.onload = async () => {
 	async function initial() {
 		if (typeof geturl.fbclid != 'undefined') {
 			delete geturl.fbclid;
-			array2url(geturl);
+			obj2url(geturl);
 		}
 		let page = 'oll';
 		if (typeof geturl.page != 'undefined') {
@@ -98,7 +101,7 @@ window.onload = async () => {
 	await initial();
 
 	window.addEventListener("popstate", async () => {
-		geturl = url2array();
+		geturl = url2obj();
 		await initial();
 	});
 };
