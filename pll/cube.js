@@ -52,10 +52,9 @@ let data = [
 		]
 	}
 ];
-let text = '';
+let text = await loadfile('text', 'pll/style.svg');
 let tagreg = [];
 let icon = () => iconlink.href = style(5, 0);
-let initial = async file => text == '' ? text = await loadfile('text', file || 'pll/style.svg') : text;
 function build(formula) {
 	if (formula == 1) {
 		if (tagreg[1] !== undefined) return;
@@ -222,7 +221,6 @@ function id2seat(id) {
 export default {
 	tagreg,
 	icon,
-	initial,
 	build,
 	style
 };

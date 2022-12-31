@@ -109,10 +109,9 @@ let data = [
 		]
 	}
 ];
-let text = '';
+let text = await loadfile('text', 'oll/style.svg');
 let tagreg = [];
 let icon = () => iconlink.href = style(0, 0);
-let initial = async file => text == '' ? text = await loadfile('text', file || 'oll/style.svg') : text;
 function build(formula) {
 	if (formula == 1) {
 		if (tagreg[1] !== undefined) return;
@@ -374,7 +373,6 @@ export default {
 	data,
 	tagreg,
 	icon,
-	initial,
 	build,
 	style
 };

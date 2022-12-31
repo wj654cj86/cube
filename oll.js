@@ -1,4 +1,4 @@
-import oll from './cube.js';
+import oll from './oll/cube.js';
 function p(script) {
 	script += 'uuuuuu';
 	let data = [];
@@ -172,39 +172,36 @@ function q(script) {
 	return data.join('');
 }
 
-window.onload = async () => {
-	await oll.initial('style.svg');
-	oll.icon();
-	svgdone.onclick = function () {
-		olldiv.innerHTML = '';
-		oll.data[9].table[0].script = svgscript.value;
-		delete oll.data[9].table[0].reg;
-		let img = new Image();
-		img.src = oll.style(9, 0);
-		olldiv.append(img);
-	};
-	svgp.onclick = function () {
-		olldiv.innerHTML = '';
-		oll.data[9].table[0].script = svgscript.value = p(svgscript.value);
-		delete oll.data[9].table[0].reg;
-		let img = new Image();
-		img.src = oll.style(9, 0);
-		olldiv.append(img);
-	};
-	svgn.onclick = function () {
-		olldiv.innerHTML = '';
-		oll.data[9].table[0].script = svgscript.value = p(p(p(svgscript.value)));
-		delete oll.data[9].table[0].reg;
-		let img = new Image();
-		img.src = oll.style(9, 0);
-		olldiv.append(img);
-	};
-	svgq.onclick = function () {
-		olldiv.innerHTML = '';
-		oll.data[9].table[0].script = svgscript.value = q(svgscript.value);
-		delete oll.data[9].table[0].reg;
-		let img = new Image();
-		img.src = oll.style(9, 0);
-		olldiv.append(img);
-	};
+oll.icon();
+svgdone.onclick = function () {
+	olldiv.innerHTML = '';
+	oll.data[9].table[0].script = svgscript.value;
+	delete oll.data[9].table[0].reg;
+	let img = new Image();
+	img.src = oll.style(9, 0);
+	olldiv.append(img);
+};
+svgp.onclick = function () {
+	olldiv.innerHTML = '';
+	oll.data[9].table[0].script = svgscript.value = p(svgscript.value);
+	delete oll.data[9].table[0].reg;
+	let img = new Image();
+	img.src = oll.style(9, 0);
+	olldiv.append(img);
+};
+svgn.onclick = function () {
+	olldiv.innerHTML = '';
+	oll.data[9].table[0].script = svgscript.value = p(p(p(svgscript.value)));
+	delete oll.data[9].table[0].reg;
+	let img = new Image();
+	img.src = oll.style(9, 0);
+	olldiv.append(img);
+};
+svgq.onclick = function () {
+	olldiv.innerHTML = '';
+	oll.data[9].table[0].script = svgscript.value = q(svgscript.value);
+	delete oll.data[9].table[0].reg;
+	let img = new Image();
+	img.src = oll.style(9, 0);
+	olldiv.append(img);
 };
