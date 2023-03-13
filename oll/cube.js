@@ -115,111 +115,62 @@ let icon = () => iconlink.href = style(0, 0);
 function build(formula) {
 	if (formula == 1) {
 		if (tagreg[1] !== undefined) return;
-		let tbody = document.createElement('tbody');
+		let tbody = text2html(`<tbody></tbody>`);
 		tagreg[1] = tbody;
-		let tr = document.createElement('tr');
-		let td = document.createElement('td');
-		td.className = 'warn';
-		td.colSpan = '4';
-		td.innerHTML = '目前只有Firefox可以同時顯示所有動畫，其他瀏覽器顯示多個動畫可能會當機。';
-		tr.append(td);
+		let tr = text2html(`<tr><td class="warn" colspan="4">目前只有Firefox可以同時顯示所有動畫，其他瀏覽器顯示多個動畫可能會當機。</td></tr>`);
 		tbody.append(tr);
 		for (let i = 0; i < height; i++) {
-			let tr = document.createElement('tr');
-			let td = document.createElement('td');
-			td.className = 'group';
-			td.colSpan = '4';
-			td.innerHTML = data[i].name;
-			tr.append(td);
+			let tr = text2html(`<tr><td class="group" colspan="4">${data[i].name}</td></tr>`);
 			tbody.append(tr);
 			for (let j = 0; j < data[i].table.length; j++) {
 				let table = data[i].table[j];
 
-				let tr = document.createElement('tr');
-				let tr2 = document.createElement('tr');
+				let tr = text2html(`<tr></tr>`);
+				let tr2 = text2html(`<tr></tr>`);
 				tbody.append(tr);
 				tbody.append(tr2);
 
-				let td = document.createElement('td');
-				td.className = 'name';
-				td.rowSpan = '2';
-				td.innerHTML = 'OLL-' + table.id;
+				let td = text2html(`<td class="name" rowspan="2">OLL-${table.id}</td>`);
+				let td2 = text2html(`<td class="img" rowspan="2"><img src="${style(i, j)}"></td>`);
 
-				let td2 = document.createElement('td');
-				td2.className = 'img';
-				td2.rowSpan = '2';
-				let img = new Image();
-				img.src = style(i, j);
-				td2.append(img);
-
-				let td3 = document.createElement('td');
-				td3.className = 'formula';
-				let a = document.createElement('a');
-				a.href = '/alg/?type=alg&stage=OLL&alg=' + table.formula.replace(/'/g, '-').replace(/ /g, '_');
-				a.innerHTML = table.formula;
-				a.target = '_blank';
-				td3.append(a);
-
-				let td4 = document.createElement('td');
-				td4.className = 'description';
-				td4.innerHTML = table.description;
-
-				let td5 = document.createElement('td');
-				td5.className = 'alg';
-				td5.rowSpan = '2';
-				let button = document.createElement('button');
-				button.innerHTML = '顯示動畫';
+				let 公式轉網址 = str => str.replace(/'/g, '-').replace(/ /g, '_');
+				let url = `/alg/?type=alg&stage=OLL&alg=${公式轉網址(table.formula)}`;
+				let td3 = text2html(`<td class="formula"><a href="${url}" target="_blank">${table.formula}</a></td>`);
+				let td4 = text2html(`<td class="description">${table.description}</td>`);
+				let td5 = text2html(`<td class="alg" rowspan="2"></td>`);
+				let button = text2html(`<button>顯示動畫</button>`);
 				button.onclick = () => {
-					let iframe = document.createElement('iframe');
-					iframe.src = '/alg/?type=alg&stage=OLL&view=fullscreen&cycleView=disabled&alg=' + table.formula.replace(/'/g, '-').replace(/ /g, '_');
+					let iframe = text2html(`<iframe></iframe>`);
+					iframe.src = '/alg/?type=alg&stage=OLL&view=fullscreen&cycleView=disabled&alg=' + 公式轉網址(table.formula);
 					td5.append(iframe);
 					button.remove();
 				};
 				td5.append(button);
 
-				tr.append(td);
-				tr.append(td2);
-				tr.append(td5);
-				tr.append(td3);
+				tr.append(td, td2, td5, td3);
 				tr2.append(td4);
 			}
 		}
 	} else {
 		if (tagreg[0] !== undefined) return;
-		let tbody = document.createElement('tbody');
+		let tbody = text2html(`<tbody></tbody>`);
 		tagreg[0] = tbody;
 		for (let i = 0; i < height; i++) {
-			let tr = document.createElement('tr');
+			let tr = text2html(`<tr></tr>`);
 			tbody.append(tr);
-			let td = document.createElement('td');
-			td.className = 'group';
-			td.innerHTML = data[i].name;
+			let td = text2html(`<td class="group">${data[i].name}</td>`);
 			tr.append(td);
 			for (let j = 0; j < data[i].table.length; j++) {
 				let table = data[i].table[j];
-
-				let td = document.createElement('td');
-				td.className = 'img';
+				let td = text2html(`<td class="img">`
+					+ `<span>OLL-${table.id}</span><br>`
+					+ `<img src="${style(i, j)}"><br>`
+					+ `<span>${table.explanation}</span>`
+					+ `</td>`);
 				tr.append(td);
-
-				let span1 = document.createElement('span');
-				span1.innerHTML = 'OLL-' + table.id;
-				let br1 = document.createElement('br');
-				let img = new Image();
-				img.src = style(i, j);
-				let br2 = document.createElement('br');
-				let span2 = document.createElement('span');
-				span2.innerHTML = table.explanation;
-
-				td.append(span1);
-				td.append(br1);
-				td.append(img);
-				td.append(br2);
-				td.append(span2);
 			}
 			for (let j = data[i].table.length; j < width; j++) {
-				let td = document.createElement('td');
-				td.className = 'img';
+				let td = text2html(`<td class="img"></td>`);
 				tr.append(td);
 			}
 		}

@@ -58,113 +58,62 @@ let icon = () => iconlink.href = style(5, 0);
 function build(formula) {
 	if (formula == 1) {
 		if (tagreg[1] !== undefined) return;
-		let tbody = document.createElement('tbody');
+		let tbody = text2html(`<tbody></tbody>`);
 		tagreg[1] = tbody;
-		let tr = document.createElement('tr');
-		let td = document.createElement('td');
-		td.className = 'warn';
-		td.colSpan = '4';
-		td.innerHTML = '目前只有Firefox可以同時顯示所有動畫，其他瀏覽器顯示多個動畫可能會當機。';
-		tr.append(td);
+		let tr = text2html(`<tr><td class="warn" colspan="4">目前只有Firefox可以同時顯示所有動畫，其他瀏覽器顯示多個動畫可能會當機。</td></tr>`);
 		tbody.append(tr);
 		for (let i = 0; i < height; i++) {
-			let tr = document.createElement('tr');
-			let td = document.createElement('td');
-			td.className = 'group';
-			td.colSpan = '4';
-			td.innerHTML = data[i].name;
-			tr.append(td);
+			let tr = text2html(`<tr><td class="group" colspan="4">${data[i].name}</td></tr>`);
 			tbody.append(tr);
 			for (let j = 0; j < data[i].table.length; j++) {
 				let table = data[i].table[j];
 
-				let tr = document.createElement('tr');
-				let tr2 = document.createElement('tr');
+				let tr = text2html(`<tr></tr>`);
+				let tr2 = text2html(`<tr></tr>`);
 				tbody.append(tr);
 				tbody.append(tr2);
 
-				let td = document.createElement('td');
-				td.className = 'name';
-				td.rowSpan = '2';
-				td.innerHTML = table.id + '-perm';
+				let td = text2html(`<td class="name" rowspan="2">${table.id}-perm</td>`);
+				let td2 = text2html(`<td class="img" rowspan="2"><img src="${style(i, j)}"></td>`);
 
-				let td2 = document.createElement('td');
-				td2.className = 'img';
-				td2.rowSpan = '2';
-				let img = new Image();
-				img.src = style(i, j);
-				td2.append(img);
-
-				let td3 = document.createElement('td');
-				td3.className = 'formula';
-				let a = document.createElement('a');
-				a.href = `/alg/?type=alg${table.setup == "" ? '' : '&setup=' + table.setup.replace(/'/g, '-').replace(/ /g, '_')}&alg=${table.formula.replace(/'/g, '-').replace(/ /g, '_')}`
-				a.innerHTML = table.formula;
-				a.target = '_blank';
-				td3.append(a);
-
-				let td4 = document.createElement('td');
-				td4.className = 'description';
-				td4.innerHTML = table.description;
-
-				let td5 = document.createElement('td');
-				td5.className = 'alg';
-				td5.rowSpan = '2';
-				let button = document.createElement('button');
-				button.innerHTML = '顯示動畫';
+				let 公式轉網址 = str => str.replace(/'/g, '-').replace(/ /g, '_');
+				let url = `/alg/?type=alg${table.setup == "" ? '' : '&setup=' + 公式轉網址(table.setup)}&alg=${公式轉網址(table.formula)}`;
+				let td3 = text2html(`<td class="formula"><a href="${url}" target="_blank">${table.formula}</a></td>`);
+				let td4 = text2html(`<td class="description">${table.description}</td>`);
+				let td5 = text2html(`<td class="alg" rowspan="2"></td>`);
+				let button = text2html(`<button>顯示動畫</button>`);
 				button.onclick = () => {
-					let iframe = document.createElement('iframe');
-					iframe.src = `/alg/?type=alg&view=fullscreen&cycleView=disabled${table.setup == "" ? '' : '&setup=' + table.setup.replace(/'/g, '-').replace(/ /g, '_')}&alg=${table.formula.replace(/'/g, '-').replace(/ /g, '_')}`
+					let iframe = text2html(`<iframe></iframe>`);
+					iframe.src = `/alg/?type=alg&view=fullscreen&cycleView=disabled${table.setup == "" ? '' : '&setup=' + 公式轉網址(table.setup)}&alg=${公式轉網址(table.formula)}`;
 					td5.append(iframe);
 					button.remove();
 				};
 				td5.append(button);
 
-				tr.append(td);
-				tr.append(td2);
-				tr.append(td5);
-				tr.append(td3);
+				tr.append(td, td2, td5, td3);
 				tr2.append(td4);
 			}
 		}
 	} else {
 		if (tagreg[0] !== undefined) return;
-		let tbody = document.createElement('tbody');
+		let tbody = text2html(`<tbody></tbody>`);
 		tagreg[0] = tbody;
 		for (let i = 0; i < height; i++) {
-			let tr = document.createElement('tr');
+			let tr = text2html(`<tr></tr>`);
 			tbody.append(tr);
-			let td = document.createElement('td');
-			td.className = 'group';
-			td.innerHTML = data[i].name;
+			let td = text2html(`<td class="group">${data[i].name}</td>`);
 			tr.append(td);
 			for (let j = 0; j < data[i].table.length; j++) {
 				let table = data[i].table[j];
-
-				let td = document.createElement('td');
-				td.style.width = '200px';
-				td.className = 'img';
+				let td = text2html(`<td class="img" style="width: 200px;">`
+					+ `<span>${table.id}-perm</span><br>`
+					+ `<img src="${style(i, j)}"><br>`
+					+ `<span>${table.explanation}</span>`
+					+ `</td>`);
 				tr.append(td);
-
-				let span1 = document.createElement('span');
-				span1.innerHTML = table.id + '-perm';
-				let br1 = document.createElement('br');
-				let img = new Image();
-				img.src = style(i, j);
-				let br2 = document.createElement('br');
-				let span2 = document.createElement('span');
-				span2.innerHTML = table.explanation;
-
-				td.append(span1);
-				td.append(br1);
-				td.append(img);
-				td.append(br2);
-				td.append(span2);
 			}
 			for (let j = data[i].table.length; j < width; j++) {
-				let td = document.createElement('td');
-				td.style.width = '200px';
-				td.className = 'img';
+				let td = text2html(`<td class="img" style="width: 200px;"></td>`);
 				tr.append(td);
 			}
 		}
@@ -175,8 +124,7 @@ function style(i, j) {
 	if (table.reg !== undefined) return table.reg;
 	let svg = text2svg(text);
 	let script = table.script;
-	for (let i in script) {
-		let it = script[i];
+	for (let [i, it] of script.entries()) {
 		let clr = '#f00';
 		let ptr = 0;
 		if (it[0] == 'r') {
@@ -198,17 +146,12 @@ function style(i, j) {
 		let e = id2seat(it[ptr + 1]);
 		let x = e.x - s.x;
 		let y = e.y - s.y;
-		d += 'h' + Math.round((Math.sqrt(x * x + y * y) * 18 - 10) * 10000) / 10000;
-		let t = 'translate(' + s.x * 18 + ',' + s.y * 18 + ') rotate(' + (x != 0 ? (x < 0 ? 180 : 0) + (Math.atan(y / x) * 180 / Math.PI) : (90 + (y < 0) * 180)) + ')';
+		d += 'h' + (Math.sqrt(x * x + y * y) * 18 - 10).toFixed(4).Clear0();
+		let t = `translate(${s.x * 18},${s.y * 18})rotate(${x != 0 ? (x < 0 ? 180 : 0) + (Math.atan(y / x) * 180 / Math.PI) : (90 + (y < 0) * 180)})`;
 		if (it[ptr + 2] == 'a') {
 			d += 'm1,0l-2-1v2l2-1z';
 		}
-		let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-		path.setAttribute('fill', clr);
-		path.setAttribute('stroke', clr);
-		path.setAttribute('stroke-width', 2);
-		path.setAttribute('d', d);
-		path.setAttribute('transform', t);
+		let path = text2svg(`<path fill="${clr}" stroke="${clr}" stroke-width="2" d="${d}" transform="${t}"/>`);
 		svg.append(path);
 	}
 	table.reg = svgtourl(svg);
