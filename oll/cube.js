@@ -316,7 +316,7 @@ function style(i, j) {
 		}
 	}
 
-	table.reg = svgtourl(svg);
+	table.reg = svg2url(svg);
 	return table.reg;
 }
 

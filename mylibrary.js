@@ -6,10 +6,10 @@ String.prototype.forEach = function (cb = () => { }) { this.split(/(?:)/u).forEa
 
 Array.prototype.random = function () { return this.length <= 0 ? null : this[Math.floor(Math.random() * this.length)]; };
 Array.prototype.draw = function () { return this.length <= 0 ? null : this.splice(Math.floor(Math.random() * this.length), 1)[0]; };
+Array.prototype.promiseMap = function (cb = async v => v) { return Promise.all(this.map(cb)) };
 
-Object.prototype.entries = function () { return Object.entries(this); };
-Object.prototype.forEach = function (cb = () => { }) { this.entries().forEach(([k, v]) => cb(v, k)); };
-Object.prototype.some = function (cb = () => { }) { return this.entries().some(([k, v]) => cb(v, k)); };
+Object.forEach = (b, cb) => Object.entries(b).forEach(([k, v]) => cb(v, k));
+Object.some = (b, cb) => Object.entries(b).some(([k, v]) => cb(v, k));
 
 Audio.prototype.replay = function () {
 	this.currentTime = 0;
@@ -43,16 +43,12 @@ function obj2get(obj) {
 }
 
 let url2obj = () => Object.fromEntries(new URLSearchParams(location.search));
+let obj2url = obj => window.history.pushState({}, 0, location.href.split('?')[0] + obj2get(obj) + location.hash);
 
-function obj2url(obj) {
-	window.history.pushState({}, 0, location.href.split('?')[0] + obj2get(obj) + location.hash);
-}
-
-let promise = (cb, ...args) => new Promise(r => cb(...args, r));
 let sleep = ms => new Promise(r => setTimeout(r, ms));
-
+let blob2url = URL.createObjectURL;
 let loadfile = (type, url) => fetch(url).then(r => r[type]());
-let loadsound = url => loadfile('blob', url).then(blob => new Audio(URL.createObjectURL(blob)));
+let loadsound = url => loadfile('blob', url).then(blob => new Audio(blob2url(blob)));
 let sentpost = (url, obj) => fetch(url, {
 	body: JSON.stringify(obj),
 	headers: { 'content-type': 'application/json' },
@@ -88,19 +84,19 @@ let loadimg = src => new Promise((res, rej) => {
 	img.src = src;
 });
 
-function imgtocanvas(img) {
+function img2canvas(img) {
 	let canvas = text2html(`<canvas width="${img.naturalWidth}" height="${img.naturalHeight}"/>`);
 	let ctx = canvas.getContext("2d");
 	ctx.drawImage(img, 0, 0);
 	return canvas;
 }
 
-let svgtexttourl = text => URL.createObjectURL(new Blob([text], { type: 'image/svg+xml' }));
-let svgtourl = svg => svgtexttourl(xml2text(svg));
-let svgtoimg = svg => loadimg(svgtourl(svg));
+let svgtext2url = text => blob2url(new Blob([text], { type: 'image/svg+xml' }));
+let svg2url = svg => svgtext2url(xml2text(svg));
+let svg2img = svg => loadimg(svg2url(svg));
 
-let svgtopngurl = svg => svgtoimg(svg).then(img => new Promise(r => imgtocanvas(img).toBlob(blob => r(URL.createObjectURL(blob)))));
-let pngtobase64 = src => loadimg(src).then(img => imgtocanvas(img).toDataURL());
+let svg2pngurl = svg => svg2img(svg).then(img => new Promise(r => img2canvas(img).toBlob(blob => r(blob2url(blob)))));
+let png2base64 = src => loadimg(src).then(img => img2canvas(img).toDataURL());
 
 function startDownload(url, name) {
 	let a = document.createElement('a');

@@ -123,38 +123,37 @@ function style(i, j) {
 	let table = data[i].table[j];
 	if (table.reg !== undefined) return table.reg;
 	let svg = text2svg(text);
-	let script = table.script;
-	for (let [i, it] of script.entries()) {
+	for (let v of table.script) {
 		let clr = '#f00';
 		let ptr = 0;
-		if (it[0] == 'r') {
+		if (v[0] == 'r') {
 			clr = '#f00';
 			ptr++;
-		} else if (it[0] == 'g') {
+		} else if (v[0] == 'g') {
 			clr = '#0a0';
 			ptr++;
-		} else if (it[0] == 'b') {
+		} else if (v[0] == 'b') {
 			clr = '#33f';
 			ptr++;
 		}
 		let d = 'M5,0';
-		if (it[ptr] == 'a') {
+		if (v[ptr] == 'a') {
 			d = 'M4,0l2-1v2zm2,0';
 			ptr++;
 		}
-		let s = id2seat(it[ptr]);
-		let e = id2seat(it[ptr + 1]);
+		let s = id2seat(v[ptr]);
+		let e = id2seat(v[ptr + 1]);
 		let x = e.x - s.x;
 		let y = e.y - s.y;
 		d += 'h' + (Math.sqrt(x * x + y * y) * 18 - 10).toFixed(4).Clear0();
 		let t = `translate(${s.x * 18},${s.y * 18})rotate(${x != 0 ? (x < 0 ? 180 : 0) + (Math.atan(y / x) * 180 / Math.PI) : (90 + (y < 0) * 180)})`;
-		if (it[ptr + 2] == 'a') {
+		if (v[ptr + 2] == 'a') {
 			d += 'm1,0l-2-1v2l2-1z';
 		}
 		let path = text2svg(`<path fill="${clr}" stroke="${clr}" stroke-width="2" d="${d}" transform="${t}"/>`);
 		svg.append(path);
 	}
-	table.reg = svgtourl(svg);
+	table.reg = svg2url(svg);
 	return table.reg;
 }
 function id2seat(id) {
